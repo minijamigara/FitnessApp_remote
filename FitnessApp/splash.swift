@@ -58,7 +58,7 @@ class splash: UIViewController {
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150).isActive = true
         //nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         
-        //nextButton.addTarget(self, action: #selector(gotoLogin), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(gotoLogin), for: .touchUpInside)
     }
     @objc func startHighlight(sender: UIButton) {
         nextButton.layer.borderColor = UIColor.systemPink.cgColor
@@ -68,11 +68,11 @@ class splash: UIViewController {
         nextButton.layer.borderColor = UIColor.white.cgColor
         nextButton.layer.borderWidth = 1
     }
-    /*
+    
     @objc func gotoLogin(){
         let loginScreen = LoginScreen()
         loginScreen.title = "Login"
         navigationController?.pushViewController(loginScreen, animated: true)
-    }*/
+    }
 }
 
