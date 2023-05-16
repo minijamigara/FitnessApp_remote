@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		04B584DF2A1166FA00824CFB /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B584DE2A1166FA00824CFB /* LoginScreen.swift */; };
+		04B584E12A116A4A00824CFB /* SignUpScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B584E02A116A4A00824CFB /* SignUpScreen.swift */; };
 		04D2E3B02A1105FB0050708E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2E3AF2A1105FB0050708E /* AppDelegate.swift */; };
 		04D2E3B22A1105FB0050708E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2E3B12A1105FB0050708E /* SceneDelegate.swift */; };
 		04D2E3B42A1105FB0050708E /* splash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2E3B32A1105FB0050708E /* splash.swift */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		04B584DE2A1166FA00824CFB /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
+		04B584E02A116A4A00824CFB /* SignUpScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScreen.swift; sourceTree = "<group>"; };
 		04D2E3AC2A1105FB0050708E /* FitnessApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitnessApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D2E3AF2A1105FB0050708E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04D2E3B12A1105FB0050708E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -37,6 +39,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04B584E22A126E3A00824CFB /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				04B584E02A116A4A00824CFB /* SignUpScreen.swift */,
+				04B584DE2A1166FA00824CFB /* LoginScreen.swift */,
+				04D2E3B32A1105FB0050708E /* splash.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
 		04D2E3A32A1105FB0050708E = {
 			isa = PBXGroup;
 			children = (
@@ -56,13 +68,12 @@
 		04D2E3AE2A1105FB0050708E /* FitnessApp */ = {
 			isa = PBXGroup;
 			children = (
+				04B584E22A126E3A00824CFB /* controller */,
 				04D2E3AF2A1105FB0050708E /* AppDelegate.swift */,
 				04D2E3B12A1105FB0050708E /* SceneDelegate.swift */,
-				04D2E3B32A1105FB0050708E /* splash.swift */,
 				04D2E3B82A1105FE0050708E /* Assets.xcassets */,
 				04D2E3BA2A1105FE0050708E /* LaunchScreen.storyboard */,
 				04D2E3BD2A1105FE0050708E /* Info.plist */,
-				04B584DE2A1166FA00824CFB /* LoginScreen.swift */,
 			);
 			path = FitnessApp;
 			sourceTree = "<group>";
@@ -138,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04D2E3B42A1105FB0050708E /* splash.swift in Sources */,
+				04B584E12A116A4A00824CFB /* SignUpScreen.swift in Sources */,
 				04B584DF2A1166FA00824CFB /* LoginScreen.swift in Sources */,
 				04D2E3B02A1105FB0050708E /* AppDelegate.swift in Sources */,
 				04D2E3B22A1105FB0050708E /* SceneDelegate.swift in Sources */,

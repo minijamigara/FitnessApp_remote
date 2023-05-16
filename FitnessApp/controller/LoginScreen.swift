@@ -64,7 +64,17 @@ class LoginScreen: UIViewController {
             noAccLbl.centerXAnchor.constraint(equalTo: rectrangleView.centerXAnchor),
             ])
         noAccLbl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -170).isActive = true
-
+        
+        noAccLbl.isUserInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gotoSignUp))
+        noAccLbl.addGestureRecognizer(tapGestureRecognizer)
+        
+    }
+    
+    @objc func gotoSignUp(){
+        let signup = SignUpScreen()
+        signup.title = "SignUp"
+        navigationController?.pushViewController(signup, animated: true)
     }
     
     func configureForgotLbl(){
@@ -130,7 +140,7 @@ class LoginScreen: UIViewController {
     }
     
     func configureLoginLableText(){
-        loginLbl.text = "Login"
+        loginLbl.text = "SignIn"
         loginLbl.textAlignment = .center
         loginLbl.textColor = .white
         loginLbl.font = UIFont(name: loginLbl.font.fontName, size: 28)
@@ -155,7 +165,7 @@ class LoginScreen: UIViewController {
         usernameTxt.autocorrectionType = .no
         usernameTxt.layer.borderWidth = 1.5
         usernameTxt.layer.borderColor = UIColor.white.cgColor
-        usernameTxt.placeholder = "User Name"
+        usernameTxt.placeholder = "Email"
         usernameTxt.textColor = .white
         usernameTxt.textAlignment = .center
         
