@@ -130,13 +130,13 @@ class LoginScreen: UIViewController {
         loginBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -218).isActive = true
         loginBtn.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -28).isActive = true
         
-        loginBtn.addTarget(self, action: #selector(gotoProfile), for: .touchUpInside)
+        loginBtn.addTarget(self, action: #selector(gotoHome), for: .touchUpInside)
     }
     
-    @objc func gotoProfile(){
-        /*let myProfile = MyProfile()
-        myProfile.title = "My Profile"
-        navigationController?.pushViewController(myProfile, animated: true)*/
+    @objc func gotoHome(){
+        let home = Home()
+        home.title = "Home"
+        navigationController?.pushViewController(home, animated: true)
     }
     
     func configureLoginLableText(){
