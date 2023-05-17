@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginScreen: UIViewController {
     
@@ -134,9 +135,55 @@ class LoginScreen: UIViewController {
     }
     
     @objc func gotoHome(){
+        
+        guard let email = usernameTxt.text, !email.isEmpty,
+              let password = passwordTxt.text, !password.isEmpty else{
+            print("Missing field data")
+            return
+        }
+        
+        //get auth instance
+        //attempt sign in
+        //if fail , display err msg
+        //if pass continue to create acc
+        
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: {[weak self]result, error in
+            guard let strongSelf = self else{
+                return
+            }
+            guard error == nil else{
+                //show acc creation
+                strongSelf.showLoggedAccount(email : email, password : password)
+                return
+            }
+            print("You have signed in")
+            strongSelf.usernameTxt.isHidden = true
+            strongSelf.passwordTxt.isHidden = true
+        })
+        
         let home = Home()
         home.title = "Home"
         navigationController?.pushViewController(home, animated: true)
+    }
+    
+    func showLoggedAccount(email : String, password : String){
+        
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: {[weak self ]result,error in
+            
+            guard let strongSelf = self else{
+                return
+            }
+            guard error == nil else{
+                //show acc creation
+                print("Login fail")
+                return
+            }
+            print("You have signed in")
+            
+            let home  = Home()
+            self?.navigationController?.pushViewController(home, animated: true)
+            
+        })
     }
     
     func configureLoginLableText(){
@@ -166,6 +213,7 @@ class LoginScreen: UIViewController {
         usernameTxt.layer.borderWidth = 1.5
         usernameTxt.layer.borderColor = UIColor.white.cgColor
         usernameTxt.placeholder = "Email"
+        usernameTxt.autocapitalizationType = .none
         usernameTxt.textColor = .white
         usernameTxt.textAlignment = .center
         
@@ -213,4 +261,5 @@ class LoginScreen: UIViewController {
     
 
 }
+
 

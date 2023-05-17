@@ -169,11 +169,7 @@ class SignUpScreen: UIViewController {
                     return
                 }
                 print("You have signed in")
-                /*
-                strongSelf.usernameTxt.isHidden = true
-                strongSelf.emailTxt.isHidden = true
-                strongSelf.passwordTxt.isHidden = true
-                strongSelf.con_passwordTxt.isHidden = true*/
+                
                 let home = Home()
                 self?.navigationController?.pushViewController(home, animated: true)
                 
