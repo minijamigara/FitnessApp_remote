@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SignUpScreen: UIViewController {
     
@@ -81,11 +82,11 @@ class SignUpScreen: UIViewController {
     
     func configureSignInBtn(){
         loginBtn.configuration = .gray()
-        loginBtn.configuration?.baseForegroundColor = .systemPink
+        loginBtn.configuration?.baseForegroundColor = .black
         loginBtn.configuration?.cornerStyle = .medium
         loginBtn.layer.borderWidth = 1
-        loginBtn.layer.borderColor = UIColor.white.cgColor
-        loginBtn.layer.backgroundColor = UIColor.white.cgColor
+        loginBtn.layer.borderColor = UIColor.orange.cgColor
+        loginBtn.layer.backgroundColor = UIColor.orange.cgColor
 
         loginBtn.setTitle("SignUp", for: .normal)
         //loginBtn.setImage(UIImage(systemName: "arrow.forward"), for: .normal)
@@ -115,9 +116,78 @@ class SignUpScreen: UIViewController {
     }
     
     @objc func gotoProfile(){
+        
+        guard let email = emailTxt.text, !email.isEmpty,
+              let password = passwordTxt.text, !password.isEmpty else{
+            print("Missing field data")
+            return
+        }
+        
+        //get auth instance
+        //attempt sign in
+        //if fail , display err msg
+        //if pass continue to create acc
+        
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: {[weak self]result, error in
+            guard let strongSelf = self else{
+                return
+            }
+            guard error == nil else{
+                //show acc creation
+                strongSelf.showCreateAccount(email : email, password : password)
+                return
+            }
+            print("You have signed in")
+            strongSelf.usernameTxt.isHidden = true
+            strongSelf.emailTxt.isHidden = true
+            strongSelf.passwordTxt.isHidden = true
+            strongSelf.con_passwordTxt.isHidden = true
+        })
+        
+        
+        
         /*let myProfile = MyProfile()
         myProfile.title = "My Profile"
         navigationController?.pushViewController(myProfile, animated: true)*/
+    }
+    
+    func showCreateAccount(email : String, password : String){
+        let alert = UIAlertController(title: "Create Account", message: "Would you like to create an account?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Continue",
+                                      style: .default,
+                                     handler: {_ in
+            
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {[weak self ]result,error in
+                
+                guard let strongSelf = self else{
+                    return
+                }
+                guard error == nil else{
+                    //show acc creation
+                    print("Account created fail")
+                    return
+                }
+                print("You have signed in")
+                /*
+                strongSelf.usernameTxt.isHidden = true
+                strongSelf.emailTxt.isHidden = true
+                strongSelf.passwordTxt.isHidden = true
+                strongSelf.con_passwordTxt.isHidden = true*/
+                let home = Home()
+                self?.navigationController?.pushViewController(home, animated: true)
+                
+            })
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel",
+                                      style: .cancel,
+                                     handler: {_ in
+            
+        }))
+        
+        present(alert, animated: true)
     }
     
     func configureLoginLableText(){
@@ -173,6 +243,7 @@ class SignUpScreen: UIViewController {
         emailTxt.layer.borderWidth = 1.5
         emailTxt.layer.borderColor = UIColor.white.cgColor
         emailTxt.placeholder = "Email"
+        emailTxt.autocapitalizationType = .none
         emailTxt.textColor = .white
         emailTxt.textAlignment = .center
         

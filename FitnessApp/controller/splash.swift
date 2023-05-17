@@ -30,7 +30,7 @@ class splash: UIViewController {
     }
     func configureButton(){
         nextButton.configuration = .gray()
-        nextButton.configuration?.baseForegroundColor = .systemPink
+        nextButton.configuration?.baseForegroundColor = .orange
         nextButton.configuration?.cornerStyle = .medium
         nextButton.layer.borderWidth = 1
         nextButton.layer.borderColor = UIColor.white.cgColor

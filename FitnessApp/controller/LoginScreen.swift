@@ -102,11 +102,11 @@ class LoginScreen: UIViewController {
     
     func configureSignInBtn(){
         loginBtn.configuration = .gray()
-        loginBtn.configuration?.baseForegroundColor = .systemPink
+        loginBtn.configuration?.baseForegroundColor = .black
         loginBtn.configuration?.cornerStyle = .medium
         loginBtn.layer.borderWidth = 1
-        loginBtn.layer.borderColor = UIColor.white.cgColor
-        loginBtn.layer.backgroundColor = UIColor.white.cgColor
+        loginBtn.layer.borderColor = UIColor.orange.cgColor
+        loginBtn.layer.backgroundColor = UIColor.orange.cgColor
 
         loginBtn.setTitle("Login", for: .normal)
         //loginBtn.setImage(UIImage(systemName: "arrow.forward"), for: .normal)
