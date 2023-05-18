@@ -169,7 +169,7 @@ class SignUpScreen: UIViewController {
                     return
                 }
                 print("You have signed in")
-                let home = Home()
+                let home = Gender()
                 self?.navigationController?.pushViewController(home, animated: true)
                 
             })

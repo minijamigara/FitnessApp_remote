@@ -78,39 +78,6 @@ class LoginScreen: UIViewController {
         navigationController?.pushViewController(signup, animated: true)
     }
     
-    func configureForgotLbl(){
-        forgotPw.text = "Forgot Password"
-        forgotPw.textAlignment = .left
-        forgotPw.textColor = .white
-        //loginLbl.font = UIFont(name: loginLbl.font.fontName, size: 28)
-        forgotPw.translatesAutoresizingMaskIntoConstraints = false
-        
-        setUpForgotPwLbl()
-        
-    }
-    
-    func setUpForgotPwLbl(){
-        rectrangleView.addSubview(forgotPw)
-        
-        NSLayoutConstraint.activate([
-            
-            forgotPw.widthAnchor.constraint(equalToConstant: 350),
-            forgotPw.heightAnchor.constraint(equalToConstant: 40),
-            ])
-        forgotPw.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -218).isActive = true
-        forgotPw.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 28).isActive = true
-        
-        forgotPw.isUserInteractionEnabled = true
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gotoGender))
-        forgotPw.addGestureRecognizer(tapGestureRecognizer)
-        
-    }
-    @objc func gotoGender(){
-        let gender = Gender()
-        gender.title = "Gender"
-        navigationController?.pushViewController(gender, animated: true)
-    }
-    
     func configureSignInBtn(){
         loginBtn.configuration = .gray()
         loginBtn.configuration?.baseForegroundColor = .black
@@ -139,12 +106,14 @@ class LoginScreen: UIViewController {
             //loginBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         loginBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -218).isActive = true
-        loginBtn.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -28).isActive = true
+        loginBtn.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -28).isActive = true;
+        loginBtn.isUserInteractionEnabled = true
         
         loginBtn.addTarget(self, action: #selector(gotoHome), for: .touchUpInside)
+        
     }
     
-    @objc func gotoHome(){
+    @objc public func gotoHome(){
         
         guard let email = usernameTxt.text, !email.isEmpty,
               let password = passwordTxt.text, !password.isEmpty else{
@@ -195,6 +164,39 @@ class LoginScreen: UIViewController {
             
         })
     }
+    
+    func configureForgotLbl(){
+        forgotPw.text = "Forgot Password"
+        forgotPw.textAlignment = .left
+        forgotPw.textColor = .white
+        //loginLbl.font = UIFont(name: loginLbl.font.fontName, size: 28)
+        forgotPw.translatesAutoresizingMaskIntoConstraints = false
+        
+        setUpForgotPwLbl()
+        
+    }
+    
+    func setUpForgotPwLbl(){
+        rectrangleView.addSubview(forgotPw)
+        
+        NSLayoutConstraint.activate([
+            
+            forgotPw.widthAnchor.constraint(equalToConstant: 350),
+            forgotPw.heightAnchor.constraint(equalToConstant: 40),
+            ])
+        forgotPw.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -218).isActive = true
+        forgotPw.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 28).isActive = true
+        
+        //forgotPw.isUserInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gotoGender))
+        forgotPw.addGestureRecognizer(tapGestureRecognizer)
+        
+    }
+    @objc func gotoGender(){
+        let gender = Gender()
+        gender.title = "Gender"
+        navigationController?.pushViewController(gender, animated: true)
+    }   
     
     func configureLoginLableText(){
         loginLbl.text = "SignIn"
