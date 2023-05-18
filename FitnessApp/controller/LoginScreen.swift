@@ -99,6 +99,16 @@ class LoginScreen: UIViewController {
             ])
         forgotPw.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -218).isActive = true
         forgotPw.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 28).isActive = true
+        
+        forgotPw.isUserInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gotoGender))
+        forgotPw.addGestureRecognizer(tapGestureRecognizer)
+        
+    }
+    @objc func gotoGender(){
+        let gender = Gender()
+        gender.title = "Gender"
+        navigationController?.pushViewController(gender, animated: true)
     }
     
     func configureSignInBtn(){

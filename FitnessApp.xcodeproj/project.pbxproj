@@ -25,6 +25,11 @@
 		04B585012A1415C700824CFB /* FirebaseFunctionsCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 04B585002A1415C700824CFB /* FirebaseFunctionsCombine-Community */; };
 		04B585032A1415C700824CFB /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 04B585022A1415C700824CFB /* FirebaseStorage */; };
 		04B585052A1415C700824CFB /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 04B585042A1415C700824CFB /* FirebaseStorageCombine-Community */; };
+		04B585072A14B91F00824CFB /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B585062A14B91F00824CFB /* Gender.swift */; };
+		04B585092A14BAC500824CFB /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B585082A14BAC500824CFB /* Goal.swift */; };
+		04B5850D2A14BB2A00824CFB /* Height.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5850C2A14BB2A00824CFB /* Height.swift */; };
+		04B5850F2A14BB4F00824CFB /* PrevWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5850E2A14BB4F00824CFB /* PrevWeight.swift */; };
+		04B585112A14BB6900824CFB /* AftWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B585102A14BB6900824CFB /* AftWeight.swift */; };
 		04D2E3B02A1105FB0050708E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2E3AF2A1105FB0050708E /* AppDelegate.swift */; };
 		04D2E3B22A1105FB0050708E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2E3B12A1105FB0050708E /* SceneDelegate.swift */; };
 		04D2E3B42A1105FB0050708E /* splash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2E3B32A1105FB0050708E /* splash.swift */; };
@@ -37,6 +42,11 @@
 		04B584E02A116A4A00824CFB /* SignUpScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScreen.swift; sourceTree = "<group>"; };
 		04B584E32A1305C100824CFB /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		04B584E72A13F10600824CFB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		04B585062A14B91F00824CFB /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
+		04B585082A14BAC500824CFB /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
+		04B5850C2A14BB2A00824CFB /* Height.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Height.swift; sourceTree = "<group>"; };
+		04B5850E2A14BB4F00824CFB /* PrevWeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrevWeight.swift; sourceTree = "<group>"; };
+		04B585102A14BB6900824CFB /* AftWeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AftWeight.swift; sourceTree = "<group>"; };
 		04D2E3AC2A1105FB0050708E /* FitnessApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitnessApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D2E3AF2A1105FB0050708E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04D2E3B12A1105FB0050708E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +88,11 @@
 				04B584DE2A1166FA00824CFB /* LoginScreen.swift */,
 				04D2E3B32A1105FB0050708E /* splash.swift */,
 				04B584E32A1305C100824CFB /* Home.swift */,
+				04B585062A14B91F00824CFB /* Gender.swift */,
+				04B585082A14BAC500824CFB /* Goal.swift */,
+				04B5850C2A14BB2A00824CFB /* Height.swift */,
+				04B5850E2A14BB4F00824CFB /* PrevWeight.swift */,
+				04B585102A14BB6900824CFB /* AftWeight.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -202,12 +217,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04B585092A14BAC500824CFB /* Goal.swift in Sources */,
 				04D2E3B42A1105FB0050708E /* splash.swift in Sources */,
+				04B5850F2A14BB4F00824CFB /* PrevWeight.swift in Sources */,
+				04B585112A14BB6900824CFB /* AftWeight.swift in Sources */,
+				04B5850D2A14BB2A00824CFB /* Height.swift in Sources */,
 				04B584E12A116A4A00824CFB /* SignUpScreen.swift in Sources */,
 				04B584DF2A1166FA00824CFB /* LoginScreen.swift in Sources */,
 				04D2E3B02A1105FB0050708E /* AppDelegate.swift in Sources */,
 				04B584E42A1305C100824CFB /* Home.swift in Sources */,
 				04D2E3B22A1105FB0050708E /* SceneDelegate.swift in Sources */,
+				04B585072A14B91F00824CFB /* Gender.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

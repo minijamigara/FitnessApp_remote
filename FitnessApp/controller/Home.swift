@@ -172,6 +172,7 @@ class LandingVC : UIViewController{
             ])
         userLbl.topAnchor.constraint(equalTo: view.topAnchor, constant: 125).isActive = true
         userLbl.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 12).isActive = true
+        
     }
 }
 
