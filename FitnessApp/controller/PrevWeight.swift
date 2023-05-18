@@ -40,7 +40,7 @@ class PrevWeight: UIViewController {
     }
     
     func configureWeightTopic(){
-        weightTopic.text = "Weight"
+        weightTopic.text = "Current weight"
         weightTopic.textAlignment = .center
         weightTopic.textColor = .white
         weightTopic.font = UIFont(name: weightTopic.font.fontName, size: 24)
