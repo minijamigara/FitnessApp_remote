@@ -136,6 +136,46 @@ class LandingVC : UIViewController{
     
     let stackView = UIStackView()
     
+    let ex1Rec = UIView()
+    let ex1Lbl = UILabel()
+    let ex1TmeLbl = UILabel()
+    let ex1BtnImg = UIImage()
+    
+    let ex2Rec = UIView()
+    let ex2Lbl = UILabel()
+    let ex2TmeLbl = UILabel()
+    let ex2BtnImg = UIImage()
+    
+    let ex3Rec = UIView()
+    let ex3Lbl = UILabel()
+    let ex3TmeLbl = UILabel()
+    let ex3BtnImg = UIImage()
+    
+    let ex4Rec = UIView()
+    let ex4Lbl = UILabel()
+    let ex4TmeLbl = UILabel()
+    let ex4BtnImg = UIImage()
+    
+    let ex5Rec = UIView()
+    let ex5Lbl = UILabel()
+    let ex5TmeLbl = UILabel()
+    let ex5BtnImg = UIImage()
+    
+    let ex6Rec = UIView()
+    let ex6Lbl = UILabel()
+    let ex6TmeLbl = UILabel()
+    let ex6BtnImg = UIImage()
+    
+    let ex7Rec = UIView()
+    let ex7Lbl = UILabel()
+    let ex7TmeLbl = UILabel()
+    let ex7BtnImg = UIImage()
+    
+    let ex8Rec = UIView()
+    let ex8Lbl = UILabel()
+    let ex8TmeLbl = UILabel()
+    let ex8BtnImg = UIImage()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //view.backgroundColor = .black
@@ -153,7 +193,18 @@ class LandingVC : UIViewController{
         setupStepsContainer()
         setupCalContainer()
         
+        setEx1Container()
+        setEx2Container()
+        setEx3Container()
+        setEx4Container()
+        setEx5Container()
+        setEx6Container()
+        setEx7Container()
+        setEx8Container()
+        
         setupStackView()
+        
+        
     }
     
     func configureWelcomeLbl(){
@@ -299,8 +350,6 @@ class LandingVC : UIViewController{
     }
     
     func setupStackView(){
-        let container1 = UIView()
-        let container2 = UIView()
         scrollView.addSubview(stackView)
         
         scrollView.frame = CGRect(x: 0, y: 300, width: view.bounds.width, height: view.bounds.height)
@@ -321,12 +370,395 @@ class LandingVC : UIViewController{
         // Set the content size of the scroll view
         scrollView.contentSize = scrollView.bounds.size
         
+        //set to stackview
         scrollView.addSubview(rectrangleCal)
         scrollView.addSubview(rectrangleStep)
+        scrollView.addSubview(ex1Rec)
+        scrollView.addSubview(ex2Rec)
+        scrollView.addSubview(ex3Rec)
+        scrollView.addSubview(ex4Rec)
+        scrollView.addSubview(ex5Rec)
+        scrollView.addSubview(ex6Rec)
+        scrollView.addSubview(ex7Rec)
+        scrollView.addSubview(ex8Rec)
 
     }
     
+    //exercise 1 container
+    func setEx1Container(){
+        let imageName = "runner.png"
+        let image = UIImage(named: imageName)
+        let imageView = UIImageView(image: image!)
+        imageView.frame = CGRect(x: 20, y: 5, width: 50, height: 50)
+        ex1Rec.addSubview(imageView)
+        
+        ex1Rec.frame = CGRect(x:60, y: 240, width: 280 , height: 60)
+        ex1Rec.backgroundColor = UIColor.gray
+        ex1Rec.layer.opacity = 0.5
+        ex1Rec.layer.cornerRadius = 10
+        stackView.addSubview(ex1Rec)
+        
+        ex1Lbl.text = "Push ups"
+        ex1Lbl.textAlignment = .center
+        ex1Lbl.textColor = .white
+        ex1Lbl.translatesAutoresizingMaskIntoConstraints = false
+        ex1Rec.addSubview(ex1Lbl)
+        NSLayoutConstraint.activate([
+            
+            ex1Lbl.widthAnchor.constraint(equalToConstant: 350),
+            ex1Lbl.heightAnchor.constraint(equalToConstant: 40),
+            ex1Lbl.centerXAnchor.constraint(equalTo: ex1Rec.centerXAnchor),
+            ex1Lbl.centerYAnchor.constraint(equalTo: ex1Rec.centerYAnchor,constant: -10),
+            ])
+        
+        ex1TmeLbl.text = "15 min"
+        ex1TmeLbl.textAlignment = .center
+        ex1TmeLbl.textColor = .white
+        ex1TmeLbl.translatesAutoresizingMaskIntoConstraints = false
+        ex1Rec.addSubview(ex1TmeLbl)
+        NSLayoutConstraint.activate([
+            
+            ex1TmeLbl.widthAnchor.constraint(equalToConstant: 350),
+            ex1TmeLbl.heightAnchor.constraint(equalToConstant: 40),
+            ex1TmeLbl.centerXAnchor.constraint(equalTo: ex1Rec.centerXAnchor),
+            ex1TmeLbl.centerYAnchor.constraint(equalTo: ex1Rec.centerYAnchor,constant: 10),
+            ])
+        let btnImageName = "play-button.png"
+        let btnImage = UIImage(named: btnImageName)
+        let btnImageView = UIImageView(image: btnImage!)
+        btnImageView.frame = CGRect(x: 220, y: 16, width: 30, height: 30)
+        ex1Rec.addSubview(btnImageView)
+        
+    }
     
+    //exercise 2 container
+    func setEx2Container(){
+        let imageName = "runner.png"
+        let image = UIImage(named: imageName)
+        let imageView = UIImageView(image: image!)
+        imageView.frame = CGRect(x: 20, y: 5, width: 50, height: 50)
+        ex2Rec.addSubview(imageView)
+        
+        ex2Rec.frame = CGRect(x:60, y: 320, width: 280 , height: 60)
+        ex2Rec.backgroundColor = UIColor.gray
+        ex2Rec.layer.opacity = 0.5
+        ex2Rec.layer.cornerRadius = 10
+        stackView.addSubview(ex2Rec)
+        
+        ex2Lbl.text = "Pull ups"
+        ex2Lbl.textAlignment = .center
+        ex2Lbl.textColor = .white
+        ex2Lbl.translatesAutoresizingMaskIntoConstraints = false
+        ex2Rec.addSubview(ex2Lbl)
+        NSLayoutConstraint.activate([
+            
+            ex2Lbl.widthAnchor.constraint(equalToConstant: 350),
+            ex2Lbl.heightAnchor.constraint(equalToConstant: 40),
+            ex2Lbl.centerXAnchor.constraint(equalTo: ex2Rec.centerXAnchor),
+            ex2Lbl.centerYAnchor.constraint(equalTo: ex2Rec.centerYAnchor,constant: -10),
+            ])
+        
+        ex2TmeLbl.text = "10 min"
+        ex2TmeLbl.textAlignment = .center
+        ex2TmeLbl.textColor = .white
+        ex2TmeLbl.translatesAutoresizingMaskIntoConstraints = false
+        ex2Rec.addSubview(ex2TmeLbl)
+        NSLayoutConstraint.activate([
+            
+            ex2TmeLbl.widthAnchor.constraint(equalToConstant: 350),
+            ex2TmeLbl.heightAnchor.constraint(equalToConstant: 40),
+            ex2TmeLbl.centerXAnchor.constraint(equalTo: ex2Rec.centerXAnchor),
+            ex2TmeLbl.centerYAnchor.constraint(equalTo: ex2Rec.centerYAnchor,constant: 10),
+            ])
+        let btnImageName = "play-button.png"
+        let btnImage = UIImage(named: btnImageName)
+        let btnImageView = UIImageView(image: btnImage!)
+        btnImageView.frame = CGRect(x: 220, y: 16, width: 30, height: 30)
+        ex2Rec.addSubview(btnImageView)
+        
+    }
+    
+    //exercise 3 container
+    func setEx3Container(){
+        let imageName = "runner.png"
+        let image = UIImage(named: imageName)
+        let imageView = UIImageView(image: image!)
+        imageView.frame = CGRect(x: 20, y: 5, width: 50, height: 50)
+        ex3Rec.addSubview(imageView)
+        
+        ex3Rec.frame = CGRect(x:60, y: 400, width: 280 , height: 60)
+        ex3Rec.backgroundColor = UIColor.gray
+        ex3Rec.layer.opacity = 0.5
+        ex3Rec.layer.cornerRadius = 10
+        stackView.addSubview(ex3Rec)
+        
+        ex3Lbl.text = "Squats"
+        ex3Lbl.textAlignment = .center
+        ex3Lbl.textColor = .white
+        ex3Lbl.translatesAutoresizingMaskIntoConstraints = false
+        ex3Rec.addSubview(ex3Lbl)
+        NSLayoutConstraint.activate([
+            
+            ex3Lbl.widthAnchor.constraint(equalToConstant: 350),
+            ex3Lbl.heightAnchor.constraint(equalToConstant: 40),
+            ex3Lbl.centerXAnchor.constraint(equalTo: ex3Rec.centerXAnchor),
+            ex3Lbl.centerYAnchor.constraint(equalTo: ex3Rec.centerYAnchor,constant: -10),
+            ])
+        
+        ex3TmeLbl.text = "12 min"
+        ex3TmeLbl.textAlignment = .center
+        ex3TmeLbl.textColor = .white
+        ex3TmeLbl.translatesAutoresizingMaskIntoConstraints = false
+        ex3Rec.addSubview(ex3TmeLbl)
+        NSLayoutConstraint.activate([
+            
+            ex3TmeLbl.widthAnchor.constraint(equalToConstant: 350),
+            ex3TmeLbl.heightAnchor.constraint(equalToConstant: 40),
+            ex3TmeLbl.centerXAnchor.constraint(equalTo: ex3Rec.centerXAnchor),
+            ex3TmeLbl.centerYAnchor.constraint(equalTo: ex3Rec.centerYAnchor,constant: 10),
+            ])
+        let btnImageName = "play-button.png"
+        let btnImage = UIImage(named: btnImageName)
+        let btnImageView = UIImageView(image: btnImage!)
+        btnImageView.frame = CGRect(x: 220, y: 16, width: 30, height: 30)
+        ex3Rec.addSubview(btnImageView)
+        
+    }
+    
+    //exercise 4 container
+    func setEx4Container(){
+        let imageName = "runner.png"
+        let image = UIImage(named: imageName)
+        let imageView = UIImageView(image: image!)
+        imageView.frame = CGRect(x: 20, y: 5, width: 50, height: 50)
+        ex4Rec.addSubview(imageView)
+        
+        ex4Rec.frame = CGRect(x:60, y: 400, width: 280 , height: 60)
+        ex4Rec.backgroundColor = UIColor.gray
+        ex4Rec.layer.opacity = 0.5
+        ex4Rec.layer.cornerRadius = 10
+        stackView.addSubview(ex4Rec)
+        
+        ex4Lbl.text = "Squats"
+        ex4Lbl.textAlignment = .center
+        ex4Lbl.textColor = .white
+        ex4Lbl.translatesAutoresizingMaskIntoConstraints = false
+        ex4Rec.addSubview(ex4Lbl)
+        NSLayoutConstraint.activate([
+            
+            ex4Lbl.widthAnchor.constraint(equalToConstant: 350),
+            ex4Lbl.heightAnchor.constraint(equalToConstant: 40),
+            ex4Lbl.centerXAnchor.constraint(equalTo: ex4Rec.centerXAnchor),
+            ex4Lbl.centerYAnchor.constraint(equalTo: ex4Rec.centerYAnchor,constant: -10),
+            ])
+        
+        ex4TmeLbl.text = "12 min"
+        ex4TmeLbl.textAlignment = .center
+        ex4TmeLbl.textColor = .white
+        ex4TmeLbl.translatesAutoresizingMaskIntoConstraints = false
+        ex4Rec.addSubview(ex4TmeLbl)
+        NSLayoutConstraint.activate([
+            
+            ex4TmeLbl.widthAnchor.constraint(equalToConstant: 350),
+            ex4TmeLbl.heightAnchor.constraint(equalToConstant: 40),
+            ex4TmeLbl.centerXAnchor.constraint(equalTo: ex4Rec.centerXAnchor),
+            ex4TmeLbl.centerYAnchor.constraint(equalTo: ex4Rec.centerYAnchor,constant: 10),
+            ])
+        let btnImageName = "play-button.png"
+        let btnImage = UIImage(named: btnImageName)
+        let btnImageView = UIImageView(image: btnImage!)
+        btnImageView.frame = CGRect(x: 220, y: 16, width: 30, height: 30)
+        ex4Rec.addSubview(btnImageView)
+        
+    }
+    
+    //exercise 5 container
+    func setEx5Container(){
+        let imageName = "runner.png"
+        let image = UIImage(named: imageName)
+        let imageView = UIImageView(image: image!)
+        imageView.frame = CGRect(x: 20, y: 5, width: 50, height: 50)
+        ex5Rec.addSubview(imageView)
+        
+        ex5Rec.frame = CGRect(x:60, y: 480, width: 280 , height: 60)
+        ex5Rec.backgroundColor = UIColor.gray
+        ex5Rec.layer.opacity = 0.5
+        ex5Rec.layer.cornerRadius = 10
+        stackView.addSubview(ex5Rec)
+        
+        ex5Lbl.text = "Squats"
+        ex5Lbl.textAlignment = .center
+        ex5Lbl.textColor = .white
+        ex5Lbl.translatesAutoresizingMaskIntoConstraints = false
+        ex5Rec.addSubview(ex5Lbl)
+        NSLayoutConstraint.activate([
+            
+            ex5Lbl.widthAnchor.constraint(equalToConstant: 350),
+            ex5Lbl.heightAnchor.constraint(equalToConstant: 40),
+            ex5Lbl.centerXAnchor.constraint(equalTo: ex5Rec.centerXAnchor),
+            ex5Lbl.centerYAnchor.constraint(equalTo: ex5Rec.centerYAnchor,constant: -10),
+            ])
+        
+        ex5TmeLbl.text = "12 min"
+        ex5TmeLbl.textAlignment = .center
+        ex5TmeLbl.textColor = .white
+        ex5TmeLbl.translatesAutoresizingMaskIntoConstraints = false
+        ex5Rec.addSubview(ex5TmeLbl)
+        NSLayoutConstraint.activate([
+            
+            ex5TmeLbl.widthAnchor.constraint(equalToConstant: 350),
+            ex5TmeLbl.heightAnchor.constraint(equalToConstant: 40),
+            ex5TmeLbl.centerXAnchor.constraint(equalTo: ex5Rec.centerXAnchor),
+            ex5TmeLbl.centerYAnchor.constraint(equalTo: ex5Rec.centerYAnchor,constant: 10),
+            ])
+        let btnImageName = "play-button.png"
+        let btnImage = UIImage(named: btnImageName)
+        let btnImageView = UIImageView(image: btnImage!)
+        btnImageView.frame = CGRect(x: 220, y: 16, width: 30, height: 30)
+        ex5Rec.addSubview(btnImageView)
+        
+    }
+    
+    //exercise 6 container
+    func setEx6Container(){
+        let imageName = "runner.png"
+        let image = UIImage(named: imageName)
+        let imageView = UIImageView(image: image!)
+        imageView.frame = CGRect(x: 20, y: 5, width: 50, height: 50)
+        ex6Rec.addSubview(imageView)
+        
+        ex6Rec.frame = CGRect(x:60, y: 560, width: 280 , height: 60)
+        ex6Rec.backgroundColor = UIColor.gray
+        ex6Rec.layer.opacity = 0.5
+        ex6Rec.layer.cornerRadius = 10
+        stackView.addSubview(ex6Rec)
+        
+        ex6Lbl.text = "Squats"
+        ex6Lbl.textAlignment = .center
+        ex6Lbl.textColor = .white
+        ex6Lbl.translatesAutoresizingMaskIntoConstraints = false
+        ex6Rec.addSubview(ex6Lbl)
+        NSLayoutConstraint.activate([
+            
+            ex6Lbl.widthAnchor.constraint(equalToConstant: 350),
+            ex6Lbl.heightAnchor.constraint(equalToConstant: 40),
+            ex6Lbl.centerXAnchor.constraint(equalTo: ex6Rec.centerXAnchor),
+            ex6Lbl.centerYAnchor.constraint(equalTo: ex6Rec.centerYAnchor,constant: -10),
+            ])
+        
+        ex6TmeLbl.text = "12 min"
+        ex6TmeLbl.textAlignment = .center
+        ex6TmeLbl.textColor = .white
+        ex6TmeLbl.translatesAutoresizingMaskIntoConstraints = false
+        ex6Rec.addSubview(ex6TmeLbl)
+        NSLayoutConstraint.activate([
+            
+            ex6TmeLbl.widthAnchor.constraint(equalToConstant: 350),
+            ex6TmeLbl.heightAnchor.constraint(equalToConstant: 40),
+            ex6TmeLbl.centerXAnchor.constraint(equalTo: ex6Rec.centerXAnchor),
+            ex6TmeLbl.centerYAnchor.constraint(equalTo: ex6Rec.centerYAnchor,constant: 10),
+            ])
+        let btnImageName = "play-button.png"
+        let btnImage = UIImage(named: btnImageName)
+        let btnImageView = UIImageView(image: btnImage!)
+        btnImageView.frame = CGRect(x: 220, y: 16, width: 30, height: 30)
+        ex6Rec.addSubview(btnImageView)
+        
+    }
+    
+    //exercise 7 container
+    func setEx7Container(){
+        let imageName = "runner.png"
+        let image = UIImage(named: imageName)
+        let imageView = UIImageView(image: image!)
+        imageView.frame = CGRect(x: 20, y: 5, width: 50, height: 50)
+        ex7Rec.addSubview(imageView)
+        
+        ex7Rec.frame = CGRect(x:60, y: 640, width: 280 , height: 60)
+        ex7Rec.backgroundColor = UIColor.gray
+        ex7Rec.layer.opacity = 0.5
+        ex7Rec.layer.cornerRadius = 10
+        stackView.addSubview(ex7Rec)
+        
+        ex7Lbl.text = "Squats"
+        ex7Lbl.textAlignment = .center
+        ex7Lbl.textColor = .white
+        ex7Lbl.translatesAutoresizingMaskIntoConstraints = false
+        ex7Rec.addSubview(ex7Lbl)
+        NSLayoutConstraint.activate([
+            
+            ex7Lbl.widthAnchor.constraint(equalToConstant: 350),
+            ex7Lbl.heightAnchor.constraint(equalToConstant: 40),
+            ex7Lbl.centerXAnchor.constraint(equalTo: ex7Rec.centerXAnchor),
+            ex7Lbl.centerYAnchor.constraint(equalTo: ex7Rec.centerYAnchor,constant: -10),
+            ])
+        
+        ex7TmeLbl.text = "12 min"
+        ex7TmeLbl.textAlignment = .center
+        ex7TmeLbl.textColor = .white
+        ex7TmeLbl.translatesAutoresizingMaskIntoConstraints = false
+        ex7Rec.addSubview(ex7TmeLbl)
+        NSLayoutConstraint.activate([
+            
+            ex7TmeLbl.widthAnchor.constraint(equalToConstant: 350),
+            ex7TmeLbl.heightAnchor.constraint(equalToConstant: 40),
+            ex7TmeLbl.centerXAnchor.constraint(equalTo: ex7Rec.centerXAnchor),
+            ex7TmeLbl.centerYAnchor.constraint(equalTo: ex7Rec.centerYAnchor,constant: 10),
+            ])
+        let btnImageName = "play-button.png"
+        let btnImage = UIImage(named: btnImageName)
+        let btnImageView = UIImageView(image: btnImage!)
+        btnImageView.frame = CGRect(x: 220, y: 16, width: 30, height: 30)
+        ex7Rec.addSubview(btnImageView)
+        
+    }
+    
+    //exercise 8 container
+    func setEx8Container(){
+        let imageName = "runner.png"
+        let image = UIImage(named: imageName)
+        let imageView = UIImageView(image: image!)
+        imageView.frame = CGRect(x: 20, y: 5, width: 50, height: 50)
+        ex8Rec.addSubview(imageView)
+        
+        ex8Rec.frame = CGRect(x:60, y: 720, width: 280 , height: 60)
+        ex8Rec.backgroundColor = UIColor.gray
+        ex8Rec.layer.opacity = 0.5
+        ex8Rec.layer.cornerRadius = 10
+        stackView.addSubview(ex8Rec)
+        
+        ex8Lbl.text = "Squats"
+        ex8Lbl.textAlignment = .center
+        ex8Lbl.textColor = .white
+        ex8Lbl.translatesAutoresizingMaskIntoConstraints = false
+        ex8Rec.addSubview(ex8Lbl)
+        NSLayoutConstraint.activate([
+            
+            ex8Lbl.widthAnchor.constraint(equalToConstant: 350),
+            ex8Lbl.heightAnchor.constraint(equalToConstant: 40),
+            ex8Lbl.centerXAnchor.constraint(equalTo: ex8Rec.centerXAnchor),
+            ex8Lbl.centerYAnchor.constraint(equalTo: ex8Rec.centerYAnchor,constant: -10),
+            ])
+        
+        ex8TmeLbl.text = "12 min"
+        ex8TmeLbl.textAlignment = .center
+        ex8TmeLbl.textColor = .white
+        ex8TmeLbl.translatesAutoresizingMaskIntoConstraints = false
+        ex8Rec.addSubview(ex8TmeLbl)
+        NSLayoutConstraint.activate([
+            
+            ex8TmeLbl.widthAnchor.constraint(equalToConstant: 350),
+            ex8TmeLbl.heightAnchor.constraint(equalToConstant: 40),
+            ex8TmeLbl.centerXAnchor.constraint(equalTo: ex8Rec.centerXAnchor),
+            ex8TmeLbl.centerYAnchor.constraint(equalTo: ex8Rec.centerYAnchor,constant: 10),
+            ])
+        let btnImageName = "play-button.png"
+        let btnImage = UIImage(named: btnImageName)
+        let btnImageView = UIImageView(image: btnImage!)
+        btnImageView.frame = CGRect(x: 220, y: 16, width: 30, height: 30)
+        ex8Rec.addSubview(btnImageView)
+        
+    }
 }
 
 class NotifyVC : UIViewController{
