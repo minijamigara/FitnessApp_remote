@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 let logOutBtn = UIButton();
 
@@ -18,6 +19,25 @@ public var hour = calendar.component(.hour, from: currentTime)
 class Home: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //get data
+        /*
+        let db = Firestore.firestore()
+        db.collection("beginner_tbl").document("exercise1").getDocument { (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                if let name = data?["exe_name"] as? String {
+                    print("Name: \(name)")
+                }
+                if let age = data?["exe_hours"] as? Int {
+                    print("Hours: \(age)")
+                }
+                //print(data as Any)
+
+            } else {
+                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }*/
 
         
         self.tabBar.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
@@ -114,6 +134,8 @@ class LandingVC : UIViewController{
     let calLbl = UILabel();
     let calsLbl = UILabel();
     
+    let stackView = UIStackView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //view.backgroundColor = .black
@@ -130,6 +152,8 @@ class LandingVC : UIViewController{
         configureUserLbl()
         setupStepsContainer()
         setupCalContainer()
+        
+        setupStackView()
     }
     
     func configureWelcomeLbl(){
@@ -272,6 +296,34 @@ class LandingVC : UIViewController{
             //totLbl.centerYAnchor.constraint(equalTo: rectrangleTotHr.centerYAnchor),
             ])
         calLbl.topAnchor.constraint(equalTo: rectrangleCal.topAnchor, constant: 70).isActive = true
+    }
+    
+    func setupStackView(){
+        let container1 = UIView()
+        let container2 = UIView()
+        scrollView.addSubview(stackView)
+        
+        scrollView.frame = CGRect(x: 0, y: 300, width: view.bounds.width, height: view.bounds.height)
+
+        stackView.backgroundColor = .black
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        stackView.spacing = 8
+        
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive=true
+            stackView.topAnchor.constraint(equalTo: userLbl.topAnchor,constant: 50).isActive = true
+            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: 50).isActive=true
+
+        // Set the content size of the scroll view
+        scrollView.contentSize = scrollView.bounds.size
+        
+        scrollView.addSubview(rectrangleCal)
+        scrollView.addSubview(rectrangleStep)
+
     }
     
     
