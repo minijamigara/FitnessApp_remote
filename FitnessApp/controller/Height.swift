@@ -254,9 +254,9 @@ class Height: UIViewController {
     }
     
     @objc func gotoHeight(){
-        let goal = Goal()
-        goal.title = "Goal"
-        navigationController?.pushViewController(goal, animated: true)
+        let prev_weight = PrevWeight()
+        prev_weight.title = "Current weight"
+        navigationController?.pushViewController(prev_weight, animated: true)
     }
 
 }
