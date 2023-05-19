@@ -21,23 +21,42 @@ class Home: UITabBarController {
         super.viewDidLoad()
         
         //get data
-        /*
+        
         let db = Firestore.firestore()
-        db.collection("beginner_tbl").document("exercise1").getDocument { (document, error) in
+        /*db.collection("beginner_tbl").document("exercise1").getDocument { (document, error) in
             if let document = document, document.exists {
                 let data = document.data()
+                /*
                 if let name = data?["exe_name"] as? String {
                     print("Name: \(name)")
                 }
                 if let age = data?["exe_hours"] as? Int {
                     print("Hours: \(age)")
-                }
-                //print(data as Any)
+                }*/
+                print(data as Any)
 
             } else {
                 print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
             }
         }*/
+        
+        let collectionRef = db.collection("beginner_tbl")
+        collectionRef.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                // Handle the error
+                print("Error getting documents: \(error)")
+            } else {
+                // Process the retrieved documents
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    print(data as Any)
+                    // Access the document data as needed
+                    // Example: let documentName = document.documentID
+                    //          let documentValue = data["fieldName"]
+                }
+            }
+        }
+
 
         
         self.tabBar.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
@@ -136,10 +155,11 @@ class LandingVC : UIViewController{
     
     let stackView = UIStackView()
     
-    let ex1Rec = UIView()
+    let ex1Rec = UIButton()
     let ex1Lbl = UILabel()
     let ex1TmeLbl = UILabel()
     let ex1BtnImg = UIImage()
+    
     
     let ex2Rec = UIView()
     let ex2Lbl = UILabel()
@@ -428,8 +448,15 @@ class LandingVC : UIViewController{
         let btnImageView = UIImageView(image: btnImage!)
         btnImageView.frame = CGRect(x: 220, y: 16, width: 30, height: 30)
         ex1Rec.addSubview(btnImageView)
+        ex1Rec.addTarget(self, action: #selector(viewExercise1), for: .touchUpInside)
         
     }
+    @objc func viewExercise1(){
+        let exe_details = ExeDetails()
+        exe_details.title = "Details"
+        navigationController?.pushViewController(exe_details, animated: true)
+    }
+    
     
     //exercise 2 container
     func setEx2Container(){
