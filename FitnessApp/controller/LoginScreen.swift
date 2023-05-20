@@ -140,9 +140,8 @@ class LoginScreen: UIViewController {
             strongSelf.passwordTxt.isHidden = true
         })
         
-        let home = Home()
-        home.title = "Home"
-        navigationController?.pushViewController(home, animated: true)
+        let home  = Home()
+        self.navigationController?.pushViewController(home, animated: true)
     }
     
     func showLoggedAccount(email : String, password : String){
