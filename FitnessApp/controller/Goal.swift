@@ -13,6 +13,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class Goal: UIViewController {
     
@@ -132,7 +134,20 @@ class Goal: UIViewController {
         radioButton.frame = CGRect(x:200, y: -20, width: 100 , height: 100)
         radioButton.setImage(UIImage.init(named: "unselected_radio.png"), for: .normal)
         radioButton.setImage(UIImage.init(named: "selected_radio.png"), for: .selected)
+        radioButton.addTarget(self, action: #selector(fitCheckboxButtonTapped), for: .touchUpInside)
         rectrangleView1.addSubview(radioButton)
+    }
+    @objc func fitCheckboxButtonTapped()-> String {
+        radioButton.isSelected = !radioButton.isSelected
+        
+        // Perform any additional actions based on the checkbox state
+        if radioButton.isSelected {
+            return "nil"
+        }
+        else{
+            let goal = "Keep it fit"
+            return goal
+        }
     }
     
     //weight container
@@ -168,7 +183,20 @@ class Goal: UIViewController {
         radioButton1.frame = CGRect(x:200, y: -20, width: 100 , height: 100)
         radioButton1.setImage(UIImage.init(named: "unselected_radio.png"), for: .normal)
         radioButton1.setImage(UIImage.init(named: "selected_radio.png"), for: .selected)
+        radioButton1.addTarget(self, action: #selector(weightCheckboxButtonTapped), for: .touchUpInside)
         rectrangleView2.addSubview(radioButton1)
+    }
+    @objc func weightCheckboxButtonTapped()-> String {
+        radioButton1.isSelected = !radioButton1.isSelected
+        
+        // Perform any additional actions based on the checkbox state
+        if radioButton1.isSelected {
+            return "nil"
+        }
+        else{
+            let goal = "Loose weight"
+            return goal
+        }
     }
     
     //strong container
@@ -204,9 +232,21 @@ class Goal: UIViewController {
         radioButton2.frame = CGRect(x:200, y: -20, width: 100 , height: 100)
         radioButton2.setImage(UIImage.init(named: "unselected_radio.png"), for: .normal)
         radioButton2.setImage(UIImage.init(named: "selected_radio.png"), for: .selected)
+        radioButton2.addTarget(self, action: #selector(strongCheckboxButtonTapped), for: .touchUpInside)
         rectrangleView3.addSubview(radioButton2)
     }
-    
+    @objc func strongCheckboxButtonTapped()-> String {
+        radioButton2.isSelected = !radioButton2.isSelected
+        
+        // Perform any additional actions based on the checkbox state
+        if radioButton2.isSelected {
+            return "nil"
+        }
+        else{
+            let goal = "Get stronger"
+            return goal
+        }
+    }
     //muscle container
     func setupMusleContainer(){
         let imageName = "muscles.png"
@@ -240,7 +280,20 @@ class Goal: UIViewController {
         radioButton3.frame = CGRect(x:200, y: -20, width: 100 , height: 100)
         radioButton3.setImage(UIImage.init(named: "unselected_radio.png"), for: .normal)
         radioButton3.setImage(UIImage.init(named: "selected_radio.png"), for: .selected)
+        radioButton3.addTarget(self, action: #selector(muscleCheckboxButtonTapped), for: .touchUpInside)
         rectrangleView4.addSubview(radioButton3)
+    }
+    @objc func muscleCheckboxButtonTapped()-> String {
+        radioButton3.isSelected = !radioButton3.isSelected
+        
+        // Perform any additional actions based on the checkbox state
+        if radioButton3.isSelected {
+            return "nil"
+        }
+        else{
+            let goal = "Gain muscle mass"
+            return goal
+        }
     }
     
     //continue button
@@ -276,13 +329,65 @@ class Goal: UIViewController {
         /*loginBtn.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -28).isActive = true*/
         
         
-        continueBtn.addTarget(self, action: #selector(gotoGoal), for: .touchUpInside)
+        continueBtn.addTarget(self, action: #selector(gotoHeight), for: .touchUpInside)
     }
     
-    @objc func gotoGoal(){
-        
+    @objc func gotoHeight(){
+        let val1 = fitCheckboxButtonTapped()
+        let val2 = weightCheckboxButtonTapped()
+        let val3 = strongCheckboxButtonTapped()
+        let val4 = muscleCheckboxButtonTapped()
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser
+        let email = currentUser?.email
+        let collectionRef = db.collection("user_tbl")
+        let docRef = collectionRef.document(email!)
+        if(val1 != "nil"){
+            print(val1)
+            docRef.updateData(["goal": "Keep it fit"]) { error in
+                if let error = error {
+                    // Handle the error
+                    print("Error updating document: \(error)")
+                } else {
+                    // Field added successfully
+                    print("Field successfully added")
+                }
+            }
+        }
+        else if(val2 != "nil"){
+            docRef.updateData(["goal": "Loose weight"]) { error in
+                if let error = error {
+                    // Handle the error
+                    print("Error updating document: \(error)")
+                } else {
+                    // Field added successfully
+                    print("Field successfully added")
+                }
+            }
+        }
+        else if(val3 != "nil"){
+            docRef.updateData(["goal": "Get stronger"]) { error in
+                if let error = error {
+                    // Handle the error
+                    print("Error updating document: \(error)")
+                } else {
+                    // Field added successfully
+                    print("Field successfully added")
+                }
+            }
+        }
+        else if(val4 != "nil"){
+            docRef.updateData(["goal": "Gain muscle mass"]) { error in
+                if let error = error {
+                    // Handle the error
+                    print("Error updating document: \(error)")
+                } else {
+                    // Field added successfully
+                    print("Field successfully added")
+                }
+            }
+        }
         let height = Height()
-        height.title = "Goal"
         navigationController?.pushViewController(height, animated: true)
     }
     
