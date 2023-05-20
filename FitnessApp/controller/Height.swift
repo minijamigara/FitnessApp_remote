@@ -269,7 +269,7 @@ class Height: UIViewController {
         if(val == "cm"){
             print(val)
             let heightCm = heightTxt.text
-            docRef.updateData(["measurement_type": "cm" , "height": heightCm as Any]) { error in
+            docRef.updateData(["height_measurement_type": "cm" , "height": heightCm as Any]) { error in
                 if let error = error {
                     // Handle the error
                     print("Error updating document: \(error)")
@@ -282,7 +282,7 @@ class Height: UIViewController {
         else if(val == "feet"){
             print(val)
             let heightFeet = heightTxt.text
-            docRef.updateData(["measurement_type": "feet" , "height": heightFeet as Any]) { error in
+            docRef.updateData(["height_measurement_type": "feet" , "height": heightFeet as Any]) { error in
                 if let error = error {
                     // Handle the error
                     print("Error updating document: \(error)")
