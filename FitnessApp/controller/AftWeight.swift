@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class AftWeight: UIViewController {
     
@@ -156,13 +158,15 @@ class AftWeight: UIViewController {
         
     }
     
-    @objc func toggleSwitchValueChanged() {
+    @objc func toggleSwitchValueChanged() -> String{
          if toggleSwitch.isOn {
              // Handle toggle switch ON state
-             print("Toggle switch is ON")
+             //print("Toggle switch is ON")
+             return "killos"
          } else {
              // Handle toggle switch OFF state
-             print("Toggle switch is OFF")
+             //print("Toggle switch is OFF")
+             return "pounds"
          }
      }
     
@@ -317,13 +321,93 @@ class AftWeight: UIViewController {
         /*loginBtn.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -28).isActive = true*/
         
         
-        continueBtn.addTarget(self, action: #selector(gotoHeight), for: .touchUpInside)
+        continueBtn.addTarget(self, action: #selector(gotoAftWeight), for: .touchUpInside)
     }
     
-    @objc func gotoHeight(){
-        let aft_weight = AftWeight()
-        aft_weight.title = "Target weight"
-        navigationController?.pushViewController(aft_weight, animated: true)
+    @objc func gotoAftWeight(){
+        let val = toggleSwitchValueChanged()
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser
+        let email = currentUser?.email
+        let collectionRef = db.collection("user_tbl")
+        let docRef = collectionRef.document(email!)
+        if(val == "killos"){
+            //print(val)
+            let weightKg = weightTxt.text
+            docRef.updateData(["measurement_type": "kg" , "target_weight": weightKg as Any]) { error in
+                if let error = error {
+                    // Handle the error
+                    print("Error updating document: \(error)")
+                } else {
+                    // Field added successfully
+                    print("Field successfully added")
+                    self.getBMIData()
+                }
+            }
+        }
+        else if(val == "pounds"){
+            //print(val)
+            let weightPound = weightTxt.text
+            docRef.updateData(["measurement_type": "lbs" , "target_weight": weightPound as Any]) { error in
+                if let error = error {
+                    // Handle the error
+                    print("Error updating document: \(error)")
+                } else {
+                    // Field added successfully
+                    print("Field successfully added")
+                    self.getBMIData()
+                }
+            }
+        }
+        
+        let home = Home()
+        home.title = "Home"
+        navigationController?.pushViewController(home, animated: true)
+    }
+    
+    func getBMIData(){
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser
+        let email = currentUser?.email
+        let collectionRef = db.collection("user_tbl")
+        let docRef = collectionRef.document(email!)
+        db.collection("user_tbl").document(email!).getDocument { [self] (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                //print(data as Any)
+                db.collection("user_tbl").document(email!).getDocument { [self] (document, error) in
+                    if let document = document, document.exists {
+                        let data = document.data()
+                        
+                        if let StrHeight = data?["height"] as? String {
+                            print("Height: \(StrHeight)")
+                            if let StrWeight = data?["weight"] as? String {
+                                print("Weight: \(StrWeight)")
+                                let IntHeight = Int(StrHeight)
+                                let Intweight = Int(StrWeight)
+                                let BMI_val =  (Intweight! / (IntHeight! * IntHeight!))
+                                print(BMI_val)
+                                docRef.updateData(["BMI": BMI_val as Any]) { error in
+                                    if let error = error {
+                                        // Handle the error
+                                        print("Error updating document: \(error)")
+                                    } else {
+                                        // Field added successfully
+                                        print("Field successfully added")
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+                    }
+                }
+                //print(data as Any)
+
+            } else {
+                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
     }
 
 }
