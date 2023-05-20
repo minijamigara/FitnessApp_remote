@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class Gender: UIViewController {
     
@@ -25,6 +27,7 @@ class Gender: UIViewController {
     let radioButton2 = UIButton()
     
     let continueBtn = UIButton()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,8 +123,23 @@ class Gender: UIViewController {
         radioButton.frame = CGRect(x:200, y: -20, width: 100 , height: 100)
         radioButton.setImage(UIImage.init(named: "unselected_radio.png"), for: .normal)
         radioButton.setImage(UIImage.init(named: "selected_radio.png"), for: .selected)
+        radioButton.addTarget(self, action: #selector(maleCheckboxButtonTapped), for: .touchUpInside)
         rectrangleView1.addSubview(radioButton)
+        
     }
+    @objc func maleCheckboxButtonTapped() -> String{
+        radioButton.isSelected = !radioButton.isSelected
+        
+        // Perform any additional actions based on the checkbox state
+        if radioButton.isSelected {
+            return "nil"
+        }else{
+            let gender = "male"
+            return gender
+        }
+       
+    }
+
     
     //female container
     func setupFemaleContainer(){
@@ -156,7 +174,21 @@ class Gender: UIViewController {
         radioButton1.frame = CGRect(x:200, y: -20, width: 100 , height: 100)
         radioButton1.setImage(UIImage.init(named: "unselected_radio.png"), for: .normal)
         radioButton1.setImage(UIImage.init(named: "selected_radio.png"), for: .selected)
+        radioButton1.addTarget(self, action: #selector(femaleCheckboxButtonTapped), for: .touchUpInside)
         rectrangleView2.addSubview(radioButton1)
+    }
+    
+    @objc func femaleCheckboxButtonTapped() -> String{
+        radioButton1.isSelected = !radioButton1.isSelected
+        
+        // Perform any additional actions based on the checkbox state
+        if radioButton1.isSelected {
+            return "nil"
+        }
+        else{
+            let gender = "female"
+            return gender
+        }
     }
     
     //other container
@@ -192,8 +224,23 @@ class Gender: UIViewController {
         radioButton2.frame = CGRect(x:200, y: -20, width: 100 , height: 100)
         radioButton2.setImage(UIImage.init(named: "unselected_radio.png"), for: .normal)
         radioButton2.setImage(UIImage.init(named: "selected_radio.png"), for: .selected)
+        radioButton2.addTarget(self, action: #selector(otherCheckboxButtonTapped), for: .touchUpInside)
         rectrangleView3.addSubview(radioButton2)
     }
+    
+    @objc func otherCheckboxButtonTapped()-> String {
+        radioButton2.isSelected = !radioButton2.isSelected
+        
+        // Perform any additional actions based on the checkbox state
+        if radioButton2.isSelected {
+            return "nil"
+        }
+        else{
+            let gender = "other"
+            return gender
+        }
+    }
+    
     
     //continue button
     func configureContinueBtn(){
@@ -232,8 +279,59 @@ class Gender: UIViewController {
     }
     
     @objc func gotoGoal(){
+        let val1 = maleCheckboxButtonTapped()
+        let val2 = femaleCheckboxButtonTapped()
+        let val3 = otherCheckboxButtonTapped()
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser
+        let email = currentUser?.email
+        if(val1 != "nil"){
+            print(val1)
+            let docRef = db.collection("user_tbl").document(email!)
+                let data: [String: Any] = [
+                    "gender": "male"     // Add more fields as needed
+                ]
+                docRef.setData(data) { error in
+                    if let error = error {
+                        // Handle the error
+                        print("Error writing document: \(error)")
+                    } else {
+                        // Data written successfully
+                        print("Document successfully written")
+                    }
+                }
+        }
+        else if(val2 != "nil"){
+                let docRef = db.collection("user_tbl").document(email!)
+                let data: [String: Any] = [
+                    "gender": "female"     // Add more fields as needed
+                ]
+                docRef.setData(data) { error in
+                    if let error = error {
+                        // Handle the error\
+                        print("Error writing document: \(error)")
+                    } else {
+                        // Data written successfully
+                        print("Document successfully written")
+                    }
+                }
+        }
+        else if(val3 != "nil"){
+                let docRef = db.collection("user_tbl").document(email!)
+                let data: [String: Any] = [
+                    "gender": "other"     // Add more fields as needed
+                ]
+                docRef.setData(data) { error in
+                    if let error = error {
+                        // Handle the error
+                        print("Error writing document: \(error)")
+                    } else {
+                        // Data written successfully
+                        print("Document successfully written")
+                    }
+                }
+        }
         let goal = Goal()
-        goal.title = "Goal"
         navigationController?.pushViewController(goal, animated: true)
     }
     
