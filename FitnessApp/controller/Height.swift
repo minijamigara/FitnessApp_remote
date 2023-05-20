@@ -13,6 +13,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class Height: UIViewController {
     
@@ -156,13 +158,17 @@ class Height: UIViewController {
         
     }
     
-    @objc func toggleSwitchValueChanged() {
+    @objc func toggleSwitchValueChanged() -> String{
+        
          if toggleSwitch.isOn {
              // Handle toggle switch ON state
              print("Toggle switch is ON")
+             return "cm"
+             
          } else {
              // Handle toggle switch OFF state
              print("Toggle switch is OFF")
+             return "feet"
          }
      }
     
@@ -171,7 +177,7 @@ class Height: UIViewController {
         heightTxt.autocorrectionType = .no
         heightTxt.layer.borderWidth = 1.5
         heightTxt.layer.borderColor = UIColor.white.cgColor
-        heightTxt.text = "175"
+        heightTxt.text = "00"
         heightTxt.autocapitalizationType = .none
         heightTxt.textColor = .white
         heightTxt.textAlignment = .center
@@ -254,6 +260,39 @@ class Height: UIViewController {
     }
     
     @objc func gotoHeight(){
+        let val = toggleSwitchValueChanged()
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser
+        let email = currentUser?.email
+        let collectionRef = db.collection("user_tbl")
+        let docRef = collectionRef.document(email!)
+        if(val == "cm"){
+            print(val)
+            let heightCm = heightTxt.text
+            docRef.updateData(["measurement_type": "cm" , "height": heightCm as Any]) { error in
+                if let error = error {
+                    // Handle the error
+                    print("Error updating document: \(error)")
+                } else {
+                    // Field added successfully
+                    print("Field successfully added")
+                }
+            }
+        }
+        else if(val == "feet"){
+            print(val)
+            let heightFeet = heightTxt.text
+            docRef.updateData(["measurement_type": "cm" , "height": heightFeet as Any]) { error in
+                if let error = error {
+                    // Handle the error
+                    print("Error updating document: \(error)")
+                } else {
+                    // Field added successfully
+                    print("Field successfully added")
+                }
+            }
+        }
+        
         let prev_weight = PrevWeight()
         prev_weight.title = "Current weight"
         navigationController?.pushViewController(prev_weight, animated: true)
