@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class PrevWeight: UIViewController {
     
@@ -149,13 +151,15 @@ class PrevWeight: UIViewController {
         
     }
     
-    @objc func toggleSwitchValueChanged() {
+    @objc func toggleSwitchValueChanged() -> String{
          if toggleSwitch.isOn {
              // Handle toggle switch ON state
              print("Toggle switch is ON")
+             return "killos"
          } else {
              // Handle toggle switch OFF state
              print("Toggle switch is OFF")
+             return "pounds"
          }
      }
     
@@ -243,10 +247,43 @@ class PrevWeight: UIViewController {
         /*loginBtn.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -28).isActive = true*/
         
         
-        continueBtn.addTarget(self, action: #selector(gotoHeight), for: .touchUpInside)
+        continueBtn.addTarget(self, action: #selector(gotoTargetWeight), for: .touchUpInside)
     }
     
-    @objc func gotoHeight(){
+    @objc func gotoTargetWeight(){
+        let val = toggleSwitchValueChanged()
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser
+        let email = currentUser?.email
+        let collectionRef = db.collection("user_tbl")
+        let docRef = collectionRef.document(email!)
+        if(val == "killos"){
+            //print(val)
+            let weightKg = weightTxt.text
+            docRef.updateData(["measurement_type": "kg" , "weight": weightKg as Any]) { error in
+                if let error = error {
+                    // Handle the error
+                    print("Error updating document: \(error)")
+                } else {
+                    // Field added successfully
+                    print("Field successfully added")
+                }
+            }
+        }
+        else if(val == "pounds"){
+            //print(val)
+            let weightlbs = weightTxt.text
+            docRef.updateData(["measurement_type": "lbs" , "weight": weightlbs as Any]) { error in
+                if let error = error {
+                    // Handle the error
+                    print("Error updating document: \(error)")
+                } else {
+                    // Field added successfully
+                    print("Field successfully added")
+                }
+            }
+        }
+        
         let aft_weight = AftWeight()
         aft_weight.title = "Target weight"
         navigationController?.pushViewController(aft_weight, animated: true)
