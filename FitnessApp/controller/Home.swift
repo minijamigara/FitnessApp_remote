@@ -21,18 +21,18 @@ class Home: UITabBarController {
         super.viewDidLoad()
         
         //get data
-        
+        /*
         let db = Firestore.firestore()
-        /*db.collection("beginner_tbl").document("exercise1").getDocument { (document, error) in
+        db.collection("beginner_tbl").document("exercise1").getDocument { (document, error) in
             if let document = document, document.exists {
                 let data = document.data()
-                /*
+                
                 if let name = data?["exe_name"] as? String {
                     print("Name: \(name)")
                 }
                 if let age = data?["exe_hours"] as? Int {
                     print("Hours: \(age)")
-                }*/
+                }
                 print(data as Any)
 
             } else {
@@ -40,7 +40,7 @@ class Home: UITabBarController {
             }
         }*/
         
-        let collectionRef = db.collection("beginner_tbl")
+        /*let collectionRef = db.collection("beginner_tbl")
         collectionRef.getDocuments { (querySnapshot, error) in
             if let error = error {
                 // Handle the error
@@ -55,7 +55,7 @@ class Home: UITabBarController {
                     //          let documentValue = data["fieldName"]
                 }
             }
-        }
+        }*/
 
 
         
@@ -798,6 +798,7 @@ class NotifyVC : UIViewController{
 
 //profile
 class ProfileVC : UIViewController{
+    
     @IBOutlet weak var imageView: UIImageView!
     
     let userLbl = UILabel();
@@ -845,6 +846,28 @@ class ProfileVC : UIViewController{
         configureUsernameTxt()
         configureSaveBtn()
         
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser
+        let email = currentUser?.email
+        let collectionRef = db.collection("user_tbl")
+        let docRef = collectionRef.document(email!)
+        db.collection("user_tbl").document(email!).getDocument { [self] (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                
+                if let bmi = data?["BMI"] as? Int {
+                    print("BMI: \(bmi)")
+                    BMIValLbl.text = String(bmi)
+                }
+                if let name = data?["username"] as? String {
+                    print("Name: \(name)")
+                    userLbl.text = String(name)
+                }
+
+            } else {
+                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
         
     }
     func configureLoginLableText(){
@@ -981,7 +1004,7 @@ class ProfileVC : UIViewController{
         rectrangleBMI.layer.cornerRadius = 20
         self.view.addSubview(rectrangleBMI)
         
-        BMIValLbl.text = "84"
+        BMIValLbl.text = ""
         BMIValLbl.textAlignment = .center
         BMIValLbl.textColor = .white
         BMIValLbl.font = UIFont(name: BMIValLbl.font.fontName, size: 24)
@@ -1073,7 +1096,25 @@ class ProfileVC : UIViewController{
         /*loginBtn.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -28).isActive = true*/
         
         
-        //saveBtn.addTarget(self, action: #selector(gotoGoal), for: .touchUpInside)
+        saveBtn.addTarget(self, action: #selector(saveProfile), for: .touchUpInside)
+    }
+    
+    @objc func saveProfile(){
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser
+        let email = currentUser?.email
+        let collectionRef = db.collection("user_tbl")
+        let docRef = collectionRef.document(email!)
+        let user = usernameTxt.text
+        docRef.updateData(["username": user as Any]) { error in
+            if let error = error {
+                // Handle the error
+                print("Error updating document: \(error)")
+            } else {
+                // Field added successfully
+                print("Field successfully added")
+            }
+        }
     }
     
 
