@@ -38,7 +38,6 @@ class PrevWeight: UIViewController {
         configureLbsLbl()
         
         configureContinueBtn()
-        
     }
     
     func configureWeightTopic(){
@@ -260,7 +259,7 @@ class PrevWeight: UIViewController {
         if(val == "killos"){
             //print(val)
             let weightKg = weightTxt.text
-            docRef.updateData(["measurement_type": "kg" , "weight": weightKg as Any]) { error in
+            docRef.updateData(["weight_measurement_type": "kg" , "weight": weightKg as Any]) { error in
                 if let error = error {
                     // Handle the error
                     print("Error updating document: \(error)")
@@ -273,7 +272,7 @@ class PrevWeight: UIViewController {
         else if(val == "pounds"){
             //print(val)
             let weightlbs = weightTxt.text
-            docRef.updateData(["measurement_type": "lbs" , "weight": weightlbs as Any]) { error in
+            docRef.updateData(["weight_measurement_type": "lbs" , "weight": weightlbs as Any]) { error in
                 if let error = error {
                     // Handle the error
                     print("Error updating document: \(error)")
