@@ -13,6 +13,7 @@ struct WARMUP {
     let exe_des: String
     let exe_hours: Int
     let exe_rep: Int
+    let exe_set: Int
 
     init(snapshot: QueryDocumentSnapshot) {
         let snapshotValue = snapshot.data()
@@ -20,5 +21,6 @@ struct WARMUP {
         exe_des = snapshotValue["exe_des"] as! String
         exe_hours = snapshotValue["exe_hours"] as! Int
         exe_rep = snapshotValue["exe_rep"] as! Int
+        exe_set = snapshotValue["exe_set"] as! Int
     }
 }

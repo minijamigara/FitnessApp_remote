@@ -380,6 +380,8 @@ class Landing: UIViewController {
     let calLbl = UILabel();
     let calsLbl = UILabel();
     
+    var nameLabel = UILabel()
+    
     // Firebase Firestore reference
     let db = Firestore.firestore()
     
@@ -573,7 +575,7 @@ class Landing: UIViewController {
             imageView.frame = CGRect(x: 10.0, y: 15.0, width: 50.0, height: 50.0)
             cardView.addSubview(imageView)
             
-            let nameLabel = UILabel(frame: CGRect(x: 120.0, y: 10.0, width: cardView.frame.width - 70.0, height: 30.0))
+            nameLabel = UILabel(frame: CGRect(x: 120.0, y: 10.0, width: cardView.frame.width - 70.0, height: 30.0))
             nameLabel.text = warm.exe_name
             nameLabel.font = UIFont.systemFont(ofSize: 22.0, weight: .semibold)
             cardView.addSubview(nameLabel)
@@ -617,8 +619,8 @@ class Landing: UIViewController {
             cardView.addSubview(imageView1)
             
             // Add a tap gesture recognizer to the card view
-            //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cardTapped(_:)))
-            //cardView.addGestureRecognizer(tapGesture)
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cardTapped))
+            cardView.addGestureRecognizer(tapGesture)
             cardView.isUserInteractionEnabled = true
             cardView.tag = index
             
@@ -632,19 +634,41 @@ class Landing: UIViewController {
         
         // Add the scroll view to the main view
         view.addSubview(scrollView)
-        
-        
-        
-        
-        /*
-         // MARK: - Navigation
-         
-         // In a storyboard-based application, you will often want to do a little preparation before navigation
-         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         // Get the new view controller using segue.destination.
-         // Pass the selected object to the new view controller.
-         }
-         */
-        
+                
     }
+    @objc func cardTapped(_ sender: UITapGestureRecognizer) {
+        guard let cardView = sender.view else { return }
+        guard let index = cardView.tag as Int? else { return }
+        let selectedWarmUp = Waarmup[index]
+        
+        let exeDetails = ExeDetails(warmUp: selectedWarmUp)
+        navigationController?.pushViewController(exeDetails, animated: true)
+    }
+    
+    /*@objc func cardTapped(){
+        /*
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser
+        let email = currentUser?.email
+        let collectionRef = db.collection("user_exe_tbl")
+        let docRef = collectionRef.document(email!)
+        let name = nameLabel.text
+        docRef.updateData([name: name as Any]) { error in
+            if let error = error {
+                // Handle the error
+                print("Error updating document: \(error)")
+            } else {
+                // Field added successfully
+                print("Field successfully added")
+            }
+        }*/
+
+        let exe_details = ExeDetails()
+        exe_details.title = "Details"
+        navigationController?.pushViewController(exe_details, animated: true)
+    }*/
+
+    
+
+    
 }

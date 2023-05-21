@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class ExeDetails: UIViewController {
     
     let exeName = UILabel()
@@ -28,6 +29,17 @@ class ExeDetails: UIViewController {
     var count : Int = 0
     var timeCounting : Bool = false
     
+    let warmUp: WARMUP
+
+    init(warmUp: WARMUP) {
+        self.warmUp = warmUp
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     
     override func viewDidLoad() {
@@ -45,7 +57,7 @@ class ExeDetails: UIViewController {
         
         StartStopBtn.setTitleColor(UIColor.gray, for: .normal)
         //TimerLbl.frame = CGRect(x: 0, y: 400, width: 200, height: 50)
-        
+                      
         
     }
     
@@ -202,7 +214,7 @@ class ExeDetails: UIViewController {
     }
     
     func configureName(){
-        exeName.text = "Push ups"
+        exeName.text = warmUp.exe_name
         exeName.textAlignment = .center
         exeName.textColor = .white
         exeName.font = UIFont(name: exeName.font.fontName, size: 24)
@@ -225,7 +237,7 @@ class ExeDetails: UIViewController {
     }
     
     func configureDes(){
-        exeDes.text = "The push-up is a common calisthenics exercise beginning from the prone position. By raising and lowering the body using the arms, push-ups exercise the pectoral muscles, triceps, and anterior deltoids, ..."
+        exeDes.text = warmUp.exe_des
         exeDes.numberOfLines = 25
         exeDes.textAlignment = .center
         exeDes.textColor = .white
@@ -256,7 +268,7 @@ class ExeDetails: UIViewController {
         rectrangleSets.layer.cornerRadius = 20
         self.view.addSubview(rectrangleSets)
         
-        setValLbl.text = "24"
+        setValLbl.text = String(warmUp.exe_set)
         setValLbl.textAlignment = .center
         setValLbl.textColor = .white
         setValLbl.font = UIFont(name: setValLbl.font.fontName, size: 24)
@@ -294,7 +306,7 @@ class ExeDetails: UIViewController {
         rectrangleReps.layer.cornerRadius = 20
         self.view.addSubview(rectrangleReps)
         
-        repValLbl.text = "3"
+        repValLbl.text = String(warmUp.exe_rep)
         repValLbl.textAlignment = .center
         repValLbl.textColor = .white
         repValLbl.font = UIFont(name: repValLbl.font.fontName, size: 24)
