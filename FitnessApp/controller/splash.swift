@@ -8,6 +8,7 @@
 import UIKit
 
 class splash: UIViewController {
+    @IBOutlet weak var imageView1: UIImageView!
 
     let nextButton = UIButton()
 
@@ -25,6 +26,16 @@ class splash: UIViewController {
         nextButton.addTarget(self, action: #selector(startHighlight), for: .touchDown)
         nextButton.addTarget(self, action: #selector(stopHighlight), for: .touchUpInside)
         nextButton.addTarget(self, action: #selector(stopHighlight), for: .touchUpOutside)
+        
+        let imageName1 = "logo.png"
+        let image1 = UIImage(named: imageName1)
+        let imageView1 = UIImageView(image: image1!)
+        imageView1.frame = CGRect(x:120.0, y: 280.0, width: 140.0, height: 140.0)
+        imageView1.layer.masksToBounds = false
+        imageView1.layer.opacity = 0.8
+        imageView1.layer.cornerRadius = imageView1.frame.size.height/2
+        imageView1.clipsToBounds = true
+        imageView.addSubview(imageView1)
 
         configureButton()
     }
