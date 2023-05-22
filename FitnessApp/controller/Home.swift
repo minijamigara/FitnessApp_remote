@@ -8,6 +8,7 @@
 import UIKit
 import UIKit
 import Firebase
+
 class Home: UITabBarController {
 
     override func viewDidLoad() {
@@ -38,16 +39,140 @@ class Home: UITabBarController {
     }
 
 }
-class NotifyVC: UIViewController {
-
+class NotifyVC: UIViewController, UITableViewDataSource ,UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return models.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+         
+         // Configure the cell
+         let rowData = models[indexPath.row]
+        cell.textLabel?.text = rowData.title
+         
+         return cell
+    }
+    
+    //@IBOutlet var table : UITableView!
+    let tableView = UITableView()
+    let StartStopBtn = UIButton()
+    let resetBtn = UIButton()
+    
+    var models = [MyReminder]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .black
         title = "Notifications"
+        
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+                // Return the number of rows in the table
+                return 5 // Change this to the actual number of rows you want
+            }
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+                // Create or dequeue a cell for the given index path
+                let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
+                
+                // Customize the cell as needed
+                cell.textLabel?.text = "Row \(indexPath.row + 1)"
+                
+                return cell
+            }
+        let tableView = UITableView(frame: view.bounds, style: .plain)
+        tableView.frame = CGRect(x: 10, y: 160, width: 360, height: 580)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = .black
+        tableView.layer.borderWidth = 1
+        tableView.layer.borderColor = CGColor(gray: 255, alpha: 255)
+        
+        view.addSubview(tableView)
+        
+        configureStartBtn()
+        configureResetBtn()
 
         // Do any additional setup after loading the view.
     }
+    //start stop button
+    func configureStartBtn(){
+        StartStopBtn.configuration = .gray()
+        //StartStopBtn.configuration?.baseForegroundColor = .black
+        StartStopBtn.configuration?.cornerStyle = .medium
+        StartStopBtn.layer.borderWidth = 1
+        StartStopBtn.layer.borderColor = UIColor.orange.cgColor
+        StartStopBtn.layer.backgroundColor = UIColor.orange.cgColor
 
+        StartStopBtn.setTitle("Test", for: .normal)
+        //loginBtn.setImage(UIImage(systemName: "arrow.forward"), for: .normal)
+        StartStopBtn.semanticContentAttribute = .forceRightToLeft
+        
+        setupStartBtn()
+    }
+    
+    func setupStartBtn(){
+        self.view.addSubview(StartStopBtn)
+        
+        StartStopBtn.layer.cornerRadius = 5
+        
+        StartStopBtn.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            StartStopBtn.widthAnchor.constraint(equalToConstant: 150),
+            StartStopBtn.heightAnchor.constraint(equalToConstant: 45),
+            StartStopBtn.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
+
+        ])
+        StartStopBtn.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        StartStopBtn.addTarget(self, action: #selector(didTapAdd), for: .touchUpInside)
+    }
+    //reset button
+    func configureResetBtn(){
+        resetBtn.configuration = .gray()
+        //resetBtn.configuration?.baseForegroundColor = .black
+        resetBtn.configuration?.cornerStyle = .medium
+        resetBtn.layer.borderWidth = 1
+        resetBtn.layer.borderColor = UIColor.orange.cgColor
+        resetBtn.layer.backgroundColor = UIColor.orange.cgColor
+
+        resetBtn.setTitle("Add", for: .normal)
+        resetBtn.setTitleColor(UIColor.gray, for: .normal)
+        //loginBtn.setImage(UIImage(systemName: "arrow.forward"), for: .normal)
+        resetBtn.semanticContentAttribute = .forceRightToLeft
+        
+        setupResetBtn()
+    }
+    
+    func setupResetBtn(){
+        self.view.addSubview(resetBtn)
+        
+        resetBtn.layer.cornerRadius = 5
+        
+        resetBtn.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            resetBtn.widthAnchor.constraint(equalToConstant: 150),
+            resetBtn.heightAnchor.constraint(equalToConstant: 45),
+            resetBtn.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 225),
+
+        ])
+        resetBtn.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        resetBtn.addTarget(self, action: #selector(didTapTest), for: .touchUpInside)
+    }
+    @objc func didTapAdd(_sender : Any){
+        
+    }
+    @objc func didTapTest(_sender : Any){
+        
+    }
 }
+
+
+struct MyReminder{
+    let title : String
+    let date : Date
+    let identifier : String
+}
+
 class AccountVC: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
@@ -391,10 +516,59 @@ class Landing: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Home"
+        let currentUser = Auth.auth().currentUser
+        let email = currentUser?.email
+        print(email as Any)
+        //let docRef = collectionRef.document(email!)
+        db.collection("user_tbl").document(email!).getDocument {(document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                
+                if let bmi = data?["BMI"] as? Int {
+                    let db = Firestore.firestore()
+                    if(bmi > 40){
+                        // Fetch the data from Firestore
+                        db.collection("moderate_tbl").getDocuments() { (querySnapshot, error) in
+                            if let error = error {
+                                print("Error getting documents: \(error)")
+                            } else {
+                                var newWARMUP: [WARMUP] = []
+                                for document in querySnapshot!.documents {
+                                    let Waarmup = WARMUP(snapshot: document)
+                                    newWARMUP.append(Waarmup)
+                                }
+                                self.Waarmup = newWARMUP
+                                self.addCardViews()
+                                print("Fetched \(self.Waarmup.count) WARMUP")
+                            }
+                        }
+                    }else if(bmi < 30){
+                        // Fetch the data from Firestore
+                        db.collection("beginner_tbl").getDocuments() { (querySnapshot, error) in
+                            if let error = error {
+                                print("Error getting documents: \(error)")
+                            } else {
+                                var newWARMUP: [WARMUP] = []
+                                for document in querySnapshot!.documents {
+                                    let Waarmup = WARMUP(snapshot: document)
+                                    newWARMUP.append(Waarmup)
+                                }
+                                self.Waarmup = newWARMUP
+                                self.addCardViews()
+                                print("Fetched \(self.Waarmup.count) WARMUP")
+                            }
+                        }
+                    }
+                }
+
+            } else {
+                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
         
         
         // Fetch the data from Firestore
-        db.collection("beginner_tbl").getDocuments() { (querySnapshot, error) in
+        /*db.collection("beginner_tbl").getDocuments() { (querySnapshot, error) in
             if let error = error {
                 print("Error getting documents: \(error)")
             } else {
@@ -407,7 +581,7 @@ class Landing: UIViewController {
                 self.addCardViews()
                 print("Fetched \(self.Waarmup.count) WARMUP")
             }
-        }
+        }*/
         
         // Do any additional setup after loading the view.
     }
