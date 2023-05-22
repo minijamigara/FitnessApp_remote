@@ -11,10 +11,10 @@ import FirebaseAuth
 class SignUpScreen: UIViewController {
     
     let rectrangleView = UIView()
-    let usernameTxt = UITextField();
+    //let usernameTxt = UITextField();
     let emailTxt = UITextField();
     let passwordTxt = UITextField();
-    let con_passwordTxt = UITextField()
+    //let con_passwordTxt = UITextField()
     let loginLbl = UILabel();
     let loginBtn = UIButton();
     let noAccLbl = UILabel();
@@ -38,10 +38,10 @@ class SignUpScreen: UIViewController {
         rectrangleView.layer.cornerRadius = 90
         self.view.addSubview(rectrangleView)
         configureLoginLableText()
-        configureUsernameTxt()
+        //configureUsernameTxt()
         configureEmailTxt()
         configurePasswordTxt()
-        configureConPasswordTxt()
+        //configureConPasswordTxt()
         configureSignInBtn()
         configurenoAccLbl()
         
@@ -138,10 +138,10 @@ class SignUpScreen: UIViewController {
                 return
             }
             print("You have signed in")
-            strongSelf.usernameTxt.isHidden = true
+            //strongSelf.usernameTxt.isHidden = true
             strongSelf.emailTxt.isHidden = true
             strongSelf.passwordTxt.isHidden = true
-            strongSelf.con_passwordTxt.isHidden = true
+            //strongSelf.con_passwordTxt.isHidden = true
         })
         
         
@@ -186,7 +186,7 @@ class SignUpScreen: UIViewController {
     }
     
     func configureLoginLableText(){
-        loginLbl.text = "SighUp"
+        loginLbl.text = "SignUp"
         loginLbl.textAlignment = .center
         loginLbl.textColor = .white
         loginLbl.font = UIFont(name: loginLbl.font.fontName, size: 28)
@@ -205,7 +205,7 @@ class SignUpScreen: UIViewController {
             loginLbl.topAnchor.constraint(equalTo: rectrangleView.topAnchor,constant: 15)
             ])
     }
-    
+    /*
     func configureUsernameTxt(){
         usernameTxt.returnKeyType = .done
         usernameTxt.autocorrectionType = .no
@@ -231,7 +231,7 @@ class SignUpScreen: UIViewController {
             
         ])
     }
-    
+    */
     func configureEmailTxt(){
         emailTxt.returnKeyType = .done
         emailTxt.autocorrectionType = .no
@@ -283,7 +283,7 @@ class SignUpScreen: UIViewController {
             passwordTxt.topAnchor.constraint(equalTo: rectrangleView.topAnchor,constant: 210)
         ])
     }
-    
+    /*
     func configureConPasswordTxt(){
         con_passwordTxt.returnKeyType = .done
         con_passwordTxt.autocorrectionType = .no
@@ -307,7 +307,7 @@ class SignUpScreen: UIViewController {
             con_passwordTxt.centerXAnchor.constraint(equalTo: rectrangleView.centerXAnchor),
             con_passwordTxt.topAnchor.constraint(equalTo: rectrangleView.topAnchor,constant: 270)
         ])
-    }
+    }*/
     
 
 }
