@@ -132,16 +132,18 @@ class LoginScreen: UIViewController {
             }
             guard error == nil else{
                 //show acc creation
-                strongSelf.showLoggedAccount(email : email, password : password)
+                //strongSelf.showLoggedAccount(email : email, password : password)
                 return
             }
+            strongSelf.showLoggedAccount(email : email, password : password)
+
             print("You have signed in")
             strongSelf.usernameTxt.isHidden = true
             strongSelf.passwordTxt.isHidden = true
         })
         
-        let home  = Home()
-        self.navigationController?.pushViewController(home, animated: true)
+        //let home  = Home()
+        //self.navigationController?.pushViewController(home, animated: true)
     }
     
     func showLoggedAccount(email : String, password : String){
