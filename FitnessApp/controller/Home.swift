@@ -6,8 +6,9 @@
 //
 
 import UIKit
-import UIKit
 import Firebase
+import EventKit
+import UserNotifications
 
 class Home: UITabBarController {
 
@@ -39,139 +40,157 @@ class Home: UITabBarController {
     }
 
 }
-class NotifyVC: UIViewController, UITableViewDataSource ,UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return models.count
-    }
+//////////////////////
+class NotifyVC: UIViewController
+{
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-         
-         // Configure the cell
-         let rowData = models[indexPath.row]
-        cell.textLabel?.text = rowData.title
-         
-         return cell
-    }
+    let notificationCenter = UNUserNotificationCenter.current()
     
-    //@IBOutlet var table : UITableView!
-    let tableView = UITableView()
-    let StartStopBtn = UIButton()
-    let resetBtn = UIButton()
-    
-    var models = [MyReminder]()
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-        view.backgroundColor = .black
-        title = "Notifications"
-        
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-                // Return the number of rows in the table
-                return 5 // Change this to the actual number of rows you want
+        setupViews()
+        setupViewsDatePicker()
+        notificationCenter.requestAuthorization(options: [.alert, .sound]) {
+            (permissionGranted, error) in
+            if(!permissionGranted)
+            {
+                print("Permission Denied")
             }
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-                // Create or dequeue a cell for the given index path
-                let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
-                
-                // Customize the cell as needed
-                cell.textLabel?.text = "Row \(indexPath.row + 1)"
-                
-                return cell
-            }
-        let tableView = UITableView(frame: view.bounds, style: .plain)
-        tableView.frame = CGRect(x: 10, y: 160, width: 360, height: 580)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.backgroundColor = .black
-        tableView.layer.borderWidth = 1
-        tableView.layer.borderColor = CGColor(gray: 255, alpha: 255)
-        
-        view.addSubview(tableView)
-        
-        configureStartBtn()
-        configureResetBtn()
-
-        // Do any additional setup after loading the view.
+        }
     }
-    //start stop button
-    func configureStartBtn(){
-        StartStopBtn.configuration = .gray()
-        //StartStopBtn.configuration?.baseForegroundColor = .black
-        StartStopBtn.configuration?.cornerStyle = .medium
-        StartStopBtn.layer.borderWidth = 1
-        StartStopBtn.layer.borderColor = UIColor.orange.cgColor
-        StartStopBtn.layer.backgroundColor = UIColor.orange.cgColor
+    private var selectedDate: Date?
+    private lazy var datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        datePicker.datePickerMode = .dateAndTime
+        //datePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
+        return datePicker
+    }()
 
-        StartStopBtn.setTitle("Test", for: .normal)
-        //loginBtn.setImage(UIImage(systemName: "arrow.forward"), for: .normal)
-        StartStopBtn.semanticContentAttribute = .forceRightToLeft
-        
-        setupStartBtn()
-    }
-    
-    func setupStartBtn(){
-        self.view.addSubview(StartStopBtn)
-        
-        StartStopBtn.layer.cornerRadius = 5
-        
-        StartStopBtn.translatesAutoresizingMaskIntoConstraints = false
+    private func setupViewsDatePicker() {
+        // ...
+        view.addSubview(datePicker)
         
         NSLayoutConstraint.activate([
-            StartStopBtn.widthAnchor.constraint(equalToConstant: 150),
-            StartStopBtn.heightAnchor.constraint(equalToConstant: 45),
-            StartStopBtn.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
-
+            // ...
+            datePicker.topAnchor.constraint(equalTo: addButton.bottomAnchor, constant: 16),
+            datePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
-        StartStopBtn.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
-        StartStopBtn.addTarget(self, action: #selector(didTapAdd), for: .touchUpInside)
     }
-    //reset button
-    func configureResetBtn(){
-        resetBtn.configuration = .gray()
-        //resetBtn.configuration?.baseForegroundColor = .black
-        resetBtn.configuration?.cornerStyle = .medium
-        resetBtn.layer.borderWidth = 1
-        resetBtn.layer.borderColor = UIColor.orange.cgColor
-        resetBtn.layer.backgroundColor = UIColor.orange.cgColor
-
-        resetBtn.setTitle("Add", for: .normal)
-        resetBtn.setTitleColor(UIColor.gray, for: .normal)
-        //loginBtn.setImage(UIImage(systemName: "arrow.forward"), for: .normal)
-        resetBtn.semanticContentAttribute = .forceRightToLeft
-        
-        setupResetBtn()
-    }
+    private lazy var reminderTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Enter Reminder"
+        textField.borderStyle = .roundedRect
+        return textField
+    }()
     
-    func setupResetBtn(){
-        self.view.addSubview(resetBtn)
+    private lazy var bodyTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Enter Body"
+        textField.borderStyle = .roundedRect
+        return textField
+    }()
+    
+    private lazy var addButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Add Reminder", for: .normal)
+        button.addTarget(self, action: #selector(scheduleAction), for: .touchUpInside)
+        return button
+    }()
+    private func setupViews() {
+        view.backgroundColor = .white
         
-        resetBtn.layer.cornerRadius = 5
-        
-        resetBtn.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bodyTextField)
+        view.addSubview(reminderTextField)
+        view.addSubview(addButton)
         
         NSLayoutConstraint.activate([
-            resetBtn.widthAnchor.constraint(equalToConstant: 150),
-            resetBtn.heightAnchor.constraint(equalToConstant: 45),
-            resetBtn.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 225),
-
+            bodyTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            bodyTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -320),
+            bodyTextField.widthAnchor.constraint(equalToConstant: 200),
+            
+            reminderTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            reminderTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -280),
+            reminderTextField.widthAnchor.constraint(equalToConstant: 200),
+            
+            addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            addButton.topAnchor.constraint(equalTo: reminderTextField.bottomAnchor, constant: 16)
         ])
-        resetBtn.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
-        resetBtn.addTarget(self, action: #selector(didTapTest), for: .touchUpInside)
     }
-    @objc func didTapAdd(_sender : Any){
-        
-    }
-    @objc func didTapTest(_sender : Any){
-        
-    }
-}
+    
 
-
-struct MyReminder{
-    let title : String
-    let date : Date
-    let identifier : String
+    
+    @objc func scheduleAction(_ sender: Any)
+    {
+        notificationCenter.getNotificationSettings { (settings) in
+            
+            DispatchQueue.main.async
+            {
+                let title = self.reminderTextField.text!
+                let message = self.bodyTextField.text!
+                let date = self.datePicker.date
+                
+                if(settings.authorizationStatus == .authorized)
+                {
+                    let content = UNMutableNotificationContent()
+                    content.title = title
+                    content.body = message
+                    
+                    let dateComp = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+                    
+                    let trigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
+                    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                    
+                    self.notificationCenter.add(request) { (error) in
+                        if(error != nil)
+                        {
+                            print("Error " + error.debugDescription)
+                            return
+                        }
+                    }
+                    let ac = UIAlertController(title: "Notification Scheduled", message: "At " + self.formattedDate(date: date), preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in}))
+                    self.present(ac, animated: true)
+                    
+                    //push notification to db
+                }
+                else
+                {
+                    let ac = UIAlertController(title: "Enable Notifications?", message: "To use this feature you must enable notifications in settings", preferredStyle: .alert)
+                    let goToSettings = UIAlertAction(title: "Settings", style: .default)
+                    { (_) in
+                        guard let setttingsURL = URL(string: UIApplication.openSettingsURLString)
+                        else
+                        {
+                            return
+                        }
+                        
+                        if(UIApplication.shared.canOpenURL(setttingsURL))
+                        {
+                            UIApplication.shared.open(setttingsURL) { (_) in}
+                        }
+                    }
+                    ac.addAction(goToSettings)
+                    ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (_) in}))
+                    self.present(ac, animated: true)
+                }
+            }
+        }
+    }
+    
+    func formattedDate(date: Date) -> String
+    {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMM y HH:mm"
+        return formatter.string(from: date)
+    }
+    
 }
+//////////////////////
 
 class AccountVC: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
