@@ -45,17 +45,60 @@ class NotifyVC: UIViewController
 {
     
     let notificationCenter = UNUserNotificationCenter.current()
+    let stackView = UIStackView()
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         setupViews()
+        view.backgroundColor = .black
+        
         setupViewsDatePicker()
         notificationCenter.requestAuthorization(options: [.alert, .sound]) {
             (permissionGranted, error) in
             if(!permissionGranted)
             {
                 print("Permission Denied")
+            }
+        }
+        reminderTextField.text = nil
+        bodyTextField.text = nil
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser
+        let email = currentUser?.email
+        db.collection("reminder_tbl").document(email!).getDocument { [self] (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                
+                if let title = data?["title"] as? String {
+                    if(title != nil){
+                        let cardView = UIView(frame: CGRect(x: 20.0, y: 360, width: 350, height: 60.0))
+                        cardView.backgroundColor = .gray
+                        cardView.layer.cornerRadius = 10.0
+                        cardView.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+                        cardView.layer.shadowRadius = 2.0
+                        cardView.layer.shadowOpacity = 0.2
+                        cardView.layer.opacity = 0.5
+                        view.addSubview(cardView)
+                        
+                        
+                        let imageName = "notification.png"
+                        let image = UIImage(named: imageName)
+                        let imageView = UIImageView(image: image!)
+                        imageView.frame = CGRect(x: 10.0, y: 10.0, width: 40.0, height: 40.0)
+                        cardView.addSubview(imageView)
+                        
+                        var label1 = UILabel()
+                        label1 = UILabel(frame: CGRect(x: 120.0, y: 10.0, width: cardView.frame.width - 70.0, height: 30.0))
+                        label1.text = reminderTextField.text
+                        label1.font = UIFont.systemFont(ofSize: 18.0, weight: .semibold)
+                        cardView.addSubview(label1)
+                        label1.text = title
+                    }
+                }
+
+            } else {
+                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
             }
         }
     }
@@ -80,23 +123,43 @@ class NotifyVC: UIViewController
     }
     private lazy var reminderTextField: UITextField = {
         let textField = UITextField()
+        textField.returnKeyType = .done
+        textField.autocorrectionType = .no
+        textField.layer.borderWidth = 1.5
+        textField.layer.borderColor = UIColor.white.cgColor
+        textField.autocapitalizationType = .none
+        textField.textColor = .white
+        textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Enter Reminder"
-        textField.borderStyle = .roundedRect
+        textField.layer.cornerRadius = 20
         return textField
     }()
     
     private lazy var bodyTextField: UITextField = {
         let textField = UITextField()
+        textField.returnKeyType = .done
+        textField.autocorrectionType = .no
+        textField.layer.borderWidth = 1.5
+        textField.layer.borderColor = UIColor.white.cgColor
+        textField.autocapitalizationType = .none
+        textField.textColor = .white
+        textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Enter Body"
-        textField.borderStyle = .roundedRect
+        textField.layer.cornerRadius = 20
         return textField
     }()
     
     private lazy var addButton: UIButton = {
         let button = UIButton(type: .system)
+        button.configuration?.baseForegroundColor = .black
+        button.configuration?.cornerStyle = .medium
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.orange.cgColor
+        button.layer.backgroundColor = UIColor.orange.cgColor
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 20
         button.setTitle("Add Reminder", for: .normal)
         button.addTarget(self, action: #selector(scheduleAction), for: .touchUpInside)
         return button
@@ -110,15 +173,18 @@ class NotifyVC: UIViewController
         
         NSLayoutConstraint.activate([
             bodyTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            bodyTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -320),
-            bodyTextField.widthAnchor.constraint(equalToConstant: 200),
+            bodyTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -220),
+            bodyTextField.widthAnchor.constraint(equalToConstant: 350),
+            bodyTextField.heightAnchor.constraint(equalToConstant: 40),
             
             reminderTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             reminderTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -280),
-            reminderTextField.widthAnchor.constraint(equalToConstant: 200),
+            reminderTextField.widthAnchor.constraint(equalToConstant: 350),
+            reminderTextField.heightAnchor.constraint(equalToConstant: 40),
             
             addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            addButton.topAnchor.constraint(equalTo: reminderTextField.bottomAnchor, constant: 16)
+            addButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -160),    addButton.widthAnchor.constraint(equalToConstant: 350),
+            addButton.heightAnchor.constraint(equalToConstant: 40),
         ])
     }
     
@@ -129,7 +195,7 @@ class NotifyVC: UIViewController
         notificationCenter.getNotificationSettings { (settings) in
             
             DispatchQueue.main.async
-            {
+            { [self] in
                 let title = self.reminderTextField.text!
                 let message = self.bodyTextField.text!
                 let date = self.datePicker.date
@@ -156,7 +222,71 @@ class NotifyVC: UIViewController
                     ac.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in}))
                     self.present(ac, animated: true)
                     
-                    //push notification to db
+                    let db = Firestore.firestore()
+                    let currentUser = Auth.auth().currentUser
+                    let email = currentUser?.email
+                        let docRef = db.collection("reminder_tbl").document(email!)
+                            let data: [String: Any] = [
+                                "title": reminderTextField.text as Any,
+                                "body" : bodyTextField.text as Any,
+                                "stste" : true
+                                // Add more fields as needed
+                            ]
+                            docRef.setData(data) { error in
+                                if let error = error {
+                                    // Handle the error
+                                    print("Error writing document: \(error)")
+                                } else {
+                                    // Data written successfully
+                                    print("Document successfully written")
+                                }
+                            }
+                    db.collection("reminder_tbl").document(email!).getDocument { [self] (document, error) in
+                        if let document = document, document.exists {
+                            let data = document.data()
+                            
+                            if let title = data?["title"] as? String {
+                                let cardView = UIView(frame: CGRect(x: 20.0, y: 360, width: 350, height: 60.0))
+                                cardView.backgroundColor = .gray
+                                cardView.layer.cornerRadius = 10.0
+                                cardView.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+                                cardView.layer.shadowRadius = 2.0
+                                cardView.layer.shadowOpacity = 0.2
+                                cardView.layer.opacity = 0.5
+                                view.addSubview(cardView)
+                                
+                                
+                                let imageName = "notification.png"
+                                let image = UIImage(named: imageName)
+                                let imageView = UIImageView(image: image!)
+                                imageView.frame = CGRect(x: 10.0, y: 10.0, width: 40.0, height: 40.0)
+                                cardView.addSubview(imageView)
+                                
+                                var label1 = UILabel()
+                                label1 = UILabel(frame: CGRect(x: 120.0, y: 10.0, width: cardView.frame.width - 70.0, height: 30.0))
+                                label1.text = ""
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    label1.text = title
+                                    label1.font = UIFont.systemFont(ofSize: 18.0, weight: .semibold)
+                                    cardView.addSubview(label1)
+                                }
+                                                  
+                                /*var label2 = UILabel()
+                                label2.text = bodyTextField.text
+                                label2 = UILabel(frame: CGRect(x: 120.0, y: 20.0, width: cardView.frame.width - 70.0, height: 30.0))
+                                label2.font = UIFont.systemFont(ofSize: 16.0, weight: .medium)
+                                cardView.addSubview(label2)*/
+                                
+                                reminderTextField.text = nil
+                                bodyTextField.text = nil
+                            }
+
+                        } else {
+                            print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+                        }
+                    }
+                    
+                    
                 }
                 else
                 {
