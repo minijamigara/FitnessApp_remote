@@ -361,8 +361,8 @@ class AftWeight: UIViewController {
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             // Code to be executed after the delay
-            let home = Home()
-            home.title = "Home"
+            let home = Username()
+            home.title = "Username"
             self.navigationController?.pushViewController(home, animated: true)
         }
        

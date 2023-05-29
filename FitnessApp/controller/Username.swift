@@ -16,7 +16,7 @@ class Username: UIViewController {
     let toggleSwitch = UISwitch()
     let feetTxt = UILabel()
     let centiTxt = UILabel()
-    let heightTxt = UITextField()
+    let userTxt = UITextField()
     let cmLbl = UILabel()
     
     
@@ -31,14 +31,14 @@ class Username: UIViewController {
         configureOptionLbl()
     
         
-        configureHeightTxt()
+        configureUserTxt()
         
         configureContinueBtn()
         
     }
     
     func configureUserTopic(){
-        usernameTopic.text = "Usename"
+        usernameTopic.text = "Username"
         usernameTopic.textAlignment = .center
         usernameTopic.textColor = .white
         usernameTopic.font = UIFont(name: usernameTopic.font.fontName, size: 24)
@@ -61,7 +61,7 @@ class Username: UIViewController {
     }
     
     func configureOptionLbl(){
-        optionLbl.text = "Enter a username to continue"
+        optionLbl.text = "Enter a name to continue"
         optionLbl.textAlignment = .center
         optionLbl.textColor = .gray
         optionLbl.translatesAutoresizingMaskIntoConstraints = false
@@ -82,55 +82,33 @@ class Username: UIViewController {
         
     }
     
-    func configureFeetTxt(){
-        feetTxt.text = "Feet"
-        feetTxt.textAlignment = .left
-        feetTxt.textColor = .white
-        feetTxt.translatesAutoresizingMaskIntoConstraints = false
-        
-        setUpFeetLbl()
-        
-    }
-    
-    func setUpFeetLbl(){
-        view.addSubview(feetTxt)
-        
-        NSLayoutConstraint.activate([
-            
-            feetTxt.widthAnchor.constraint(equalToConstant: 150),
-            feetTxt.heightAnchor.constraint(equalToConstant: 40),
-            ])
-        feetTxt.topAnchor.constraint(equalTo: view.topAnchor, constant: 250).isActive = true
-        feetTxt.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 25).isActive = true
-        
-    }
-    
-    func configureHeightTxt(){
-        heightTxt.returnKeyType = .done
-        heightTxt.autocorrectionType = .no
-        heightTxt.layer.borderWidth = 1.5
-        heightTxt.layer.borderColor = UIColor.white.cgColor
-        heightTxt.placeholder = "Username"
-        heightTxt.autocapitalizationType = .none
-        heightTxt.textColor = .white
-        heightTxt.textAlignment = .center
+    func configureUserTxt(){
+        userTxt.returnKeyType = .done
+        userTxt.autocorrectionType = .no
+        userTxt.layer.borderWidth = 1.5
+        userTxt.layer.borderColor = UIColor.white.cgColor
+        userTxt.placeholder = "Username"
+        userTxt.autocapitalizationType = .none
+        userTxt.textColor = .white
+        userTxt.textAlignment = .center
 
         
-        setupHeightTxt()
+        setupUserTxt()
     }
-    func setupHeightTxt(){
-        self.view.addSubview(heightTxt)
+    func setupUserTxt(){
+        self.view.addSubview(userTxt)
         
-        heightTxt.layer.cornerRadius = 5
-        heightTxt.translatesAutoresizingMaskIntoConstraints = false
+        userTxt.layer.cornerRadius = 5
+        userTxt.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             
-            heightTxt.widthAnchor.constraint(equalToConstant: 80),
-            heightTxt.heightAnchor.constraint(equalToConstant: 40),
+            userTxt.widthAnchor.constraint(equalToConstant: 350),
+            userTxt.heightAnchor.constraint(equalToConstant: 40),
             //heightTxt.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
-        heightTxt.topAnchor.constraint(equalTo: view.topAnchor, constant: 350).isActive = true
-        heightTxt.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 130).isActive = true
+        userTxt.topAnchor.constraint(equalTo: view.topAnchor, constant: 350).isActive = true
+        userTxt.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        //userTxt.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 130).isActive = true
     }
 
     //continue button
@@ -166,19 +144,19 @@ class Username: UIViewController {
         /*loginBtn.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -28).isActive = true*/
         
         
-        continueBtn.addTarget(self, action: #selector(gotoHeight), for: .touchUpInside)
+        continueBtn.addTarget(self, action: #selector(gotoHome), for: .touchUpInside)
     }
     
-    @objc func gotoHeight(){
+    @objc func gotoHome(){
         let db = Firestore.firestore()
         let currentUser = Auth.auth().currentUser
         let email = currentUser?.email
         let collectionRef = db.collection("user_tbl")
         let docRef = collectionRef.document(email!)
         
-        let height = Height()
-        height.title = "Height"
-        navigationController?.pushViewController(height, animated: true)
+        let home = Home()
+        home.title = "Home"
+        navigationController?.pushViewController(home, animated: true)
     }
 
 }
