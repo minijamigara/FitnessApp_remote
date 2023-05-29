@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import WebKit
 
 
 class ExeDetails: UIViewController {
@@ -326,13 +327,24 @@ class ExeDetails: UIViewController {
     }
     
     func setupExerciseContainer(){
-        let imageName = "exe1.jpeg"
+        /*let imageName = "exe1.jpeg"
         let image = UIImage(named: imageName)
         let imageView = UIImageView(image: image!)
         
         imageView.frame = CGRect(x: 0, y: 0, width: 400, height: 250)
         imageView.layer.cornerRadius = 20
-        view.addSubview(imageView)
+        view.addSubview(imageView)*/
+        let webView = WKWebView(frame: view.bounds)
+        webView.frame = CGRect(x: 0, y: 0, width: 400, height: 250)
+        webView.layer.cornerRadius = 20
+        view.addSubview(webView)
+        
+        if let url = URL(string: warmUp.exe_img) {
+            let request = URLRequest(url: url)
+            webView.load(request)
+        }
+
+
     }
     
     func configureName(){
