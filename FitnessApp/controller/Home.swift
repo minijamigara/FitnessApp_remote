@@ -389,6 +389,23 @@ class AccountVC: UIViewController {
                     print("Name: \(name)")
                     userLbl.text = String(name)
                 }
+                if let joinDate = data?["joined_date"] as? String {
+                    //print("Join date: \(joinDate)")
+                    dateLbl.text = String(joinDate)
+                }
+
+            } else {
+                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
+        db.collection("user_exe_tbl").document(email!).getDocument { [self] (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                
+                if let hrs = data?["total_exercise_hrs"] as? Int {
+                    //print("Total hours: \(hrs)")
+                    totValLbl.text = String(hrs)
+                }
 
             } else {
                 print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
@@ -462,10 +479,10 @@ class AccountVC: UIViewController {
             //joinTimeLbl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             joinTimeLbl.bottomAnchor.constraint(equalTo: view.topAnchor,constant: 410)
             ])
-        joinTimeLbl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 125).isActive = true
+        joinTimeLbl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 100).isActive = true
     }
     func configureDateLbl(){
-        dateLbl.text = "May 2023"
+        dateLbl.text = ""
         dateLbl.textAlignment = .right
         dateLbl.textColor = .gray
         dateLbl.translatesAutoresizingMaskIntoConstraints = false
@@ -481,7 +498,7 @@ class AccountVC: UIViewController {
             dateLbl.heightAnchor.constraint(equalToConstant: 40),
             dateLbl.bottomAnchor.constraint(equalTo: view.topAnchor,constant: 410)
             ])
-        joinTimeLbl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 50).isActive = true
+        joinTimeLbl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 200).isActive = true
     }
     
     //tot hour container
@@ -492,7 +509,7 @@ class AccountVC: UIViewController {
         rectrangleTotHr.layer.cornerRadius = 20
         self.view.addSubview(rectrangleTotHr)
         
-        totValLbl.text = "102"
+        totValLbl.text = ""
         totValLbl.textAlignment = .center
         totValLbl.textColor = .white
         totValLbl.font = UIFont(name: totValLbl.font.fontName, size: 24)
