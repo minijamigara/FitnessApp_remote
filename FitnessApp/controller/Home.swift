@@ -348,12 +348,12 @@ class AccountVC: UIViewController {
         view.backgroundColor = .black
         title = "Profile"
         
-        let imageName = "user-2.png"
+        let imageName = "user-3.png"
         let image = UIImage(named: imageName)
         let imageView = UIImageView(image: image!)
         
         //imageView.contentMode = .scaleAspectFit
-        imageView.frame = CGRect(x: 120, y: 180, width: 160, height: 160)
+        imageView.frame = CGRect(x: 120, y: 150, width: 160, height: 160)
         imageView.layer.masksToBounds = false
         imageView.layer.borderColor = UIColor.gray.cgColor
         imageView.layer.borderWidth = 2
@@ -479,7 +479,7 @@ class AccountVC: UIViewController {
             //joinTimeLbl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             joinTimeLbl.bottomAnchor.constraint(equalTo: view.topAnchor,constant: 410)
             ])
-        joinTimeLbl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 100).isActive = true
+        joinTimeLbl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 110).isActive = true
     }
     func configureDateLbl(){
         dateLbl.text = ""
@@ -498,7 +498,7 @@ class AccountVC: UIViewController {
             dateLbl.heightAnchor.constraint(equalToConstant: 40),
             dateLbl.bottomAnchor.constraint(equalTo: view.topAnchor,constant: 410)
             ])
-        joinTimeLbl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 200).isActive = true
+        dateLbl.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -110).isActive = true
     }
     
     //tot hour container
@@ -701,7 +701,7 @@ class Landing: UIViewController {
         let email = currentUser?.email
         print(email as Any)
         //let docRef = collectionRef.document(email!)
-        db.collection("user_tbl").document(email!).getDocument {(document, error) in
+        db.collection("user_tbl").document(email!).getDocument { [self](document, error) in
             if let document = document, document.exists {
                 let data = document.data()
                 
@@ -869,7 +869,7 @@ class Landing: UIViewController {
         
         
         // Create a welcome label
-        let welcomeLable = UILabel(frame: CGRect(x: 20.0, y: 60, width: contentWidth, height: 30.0))
+        let welcomeLable = UILabel(frame: CGRect(x: 20.0, y: 10, width: contentWidth, height: 30.0))
         welcomeLable.textColor = .white
         welcomeLable.font = UIFont.systemFont(ofSize: 18.0, weight: .bold)
         scrollView.addSubview(welcomeLable)
@@ -886,6 +886,36 @@ class Landing: UIViewController {
             welcomeLable.text = "Good evening"
         }
         
+        // Create a logged username label
+        let loggedUserLable = UILabel(frame: CGRect(x: 20.0, y: 35, width: contentWidth, height: 30.0))
+        loggedUserLable.textColor = .white
+        loggedUserLable.font = UIFont.systemFont(ofSize: 24.0, weight: .bold)
+        scrollView.addSubview(loggedUserLable)
+        yPosition += 0.0
+        
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser
+        let email = currentUser?.email
+        let collectionRef = db.collection("user_tbl")
+        let docRef = db.collection("user_tbl").document(email!)
+        docRef.getDocument { [weak self] (document, error) in
+            DispatchQueue.main.async {
+                if let document = document, document.exists {
+                    let data = document.data()
+                    
+                    if let loggedUser = data?["username"] as? String {
+                        print("Logged user: \(loggedUser)")
+                        loggedUserLable.text = String(loggedUser)
+                    }
+                } else {
+                    print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+                }
+            }
+        }
+
+        
+
+        
         // Create a "logout" button
         let logoutButton = UIButton(type: .system)
         logoutButton.setTitle("Logout", for: .normal)
@@ -895,8 +925,8 @@ class Landing: UIViewController {
         logoutButton.layer.borderColor = UIColor.orange.cgColor
         logoutButton.layer.borderWidth = 1
         logoutButton.layer.backgroundColor = UIColor.orange.cgColor
-        logoutButton.layer.cornerRadius = 10.0
-        logoutButton.frame = CGRect(x: 20.0, y: 10, width: contentWidth, height: 50.0)
+        logoutButton.layer.cornerRadius = 5.0
+        logoutButton.frame = CGRect(x: 270.0, y: 10, width: 85, height: 30.0)
         logoutButton.addTarget(self, action: #selector(backToLogin), for: .touchUpInside)
         scrollView.addSubview(logoutButton)
         yPosition += 0.0
@@ -964,7 +994,7 @@ class Landing: UIViewController {
         imageView1.frame = CGRect(x: 50, y: 5, width: 50, height: 50)
         rectrangleCal.addSubview(imageView1)
         
-        calsLbl.text = "450"
+        calsLbl.text = ""
         calsLbl.textAlignment = .center
         calsLbl.textColor = .white
         calsLbl.translatesAutoresizingMaskIntoConstraints = false
@@ -977,6 +1007,22 @@ class Landing: UIViewController {
             //totLbl.centerYAnchor.constraint(equalTo: rectrangleTotHr.centerYAnchor),
             ])
         calsLbl.topAnchor.constraint(equalTo: rectrangleCal.topAnchor, constant: 50).isActive = true
+        
+        let collectionRef1 = db.collection("user_exe_tbl")
+        let docRef1 = db.collection("user_exe_tbl").document(email!)
+        db.collection("user_exe_tbl").document(email!).getDocument { [self] (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                
+                if let burnCal = data?["burned_calories"] as? Int {
+                    print("Total cal: \(burnCal)")
+                    calsLbl.text = String(burnCal)
+                }
+
+            } else {
+                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
         
         calLbl.text = "Burned Calories"
         calLbl.textAlignment = .center
