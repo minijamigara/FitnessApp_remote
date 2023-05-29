@@ -34,7 +34,7 @@ class Username: UIViewController {
         configureUserTxt()
         
         configureContinueBtn()
-        
+                
     }
     
     func configureUserTopic(){
@@ -148,11 +148,28 @@ class Username: UIViewController {
     }
     
     @objc func gotoHome(){
+        let currentDate = Date()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+
+        let formattedDate = dateFormatter.string(from: currentDate)
+        print("Current date: \(formattedDate)")
+        
         let db = Firestore.firestore()
         let currentUser = Auth.auth().currentUser
         let email = currentUser?.email
         let collectionRef = db.collection("user_tbl")
         let docRef = collectionRef.document(email!)
+        docRef.updateData(["username": userTxt.text , "joined_date": formattedDate as Any]) { error in
+            if let error = error {
+                // Handle the error
+                print("Error updating document: \(error)")
+            } else {
+                // Field added successfully
+                print("Field successfully added")
+            }
+        }
         
         let home = Home()
         home.title = "Home"

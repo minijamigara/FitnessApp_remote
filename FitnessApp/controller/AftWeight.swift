@@ -388,7 +388,8 @@ class AftWeight: UIViewController {
                                 print("Weight: \(StrWeight)")
                                 let IntHeight = Int(StrHeight)
                                 let Intweight = Int(StrWeight)
-                                let BMI_val =  (Intweight! / (IntHeight! * IntHeight!))
+                                //let heightInMeters = IntHeight! / 100
+                                var BMI_val : Int =  (Intweight! / (Intweight! * Intweight!))
                                 print(BMI_val)
                                 docRef.updateData(["BMI": BMI_val as Any]) { error in
                                     if let error = error {
