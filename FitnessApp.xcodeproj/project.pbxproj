@@ -8,9 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		0406A9D12A16C11500F06EF2 /* ExeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0406A9D02A16C11500F06EF2 /* ExeDetails.swift */; };
+		0419E5632A190CAD0023BE1A /* WARMUP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419E5622A190CAD0023BE1A /* WARMUP.swift */; };
+		0419E5652A190E3C0023BE1A /* WarmUpListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419E5642A190E3C0023BE1A /* WarmUpListViewController.swift */; };
+		0419E5692A1919DF0023BE1A /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419E5682A1919DF0023BE1A /* Home.swift */; };
+		04B4488F2A20365200E9144D /* ActivityDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B4488E2A20365200E9144D /* ActivityDetailViewController.swift */; };
 		04B584DF2A1166FA00824CFB /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B584DE2A1166FA00824CFB /* LoginScreen.swift */; };
 		04B584E12A116A4A00824CFB /* SignUpScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B584E02A116A4A00824CFB /* SignUpScreen.swift */; };
-		04B584E42A1305C100824CFB /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B584E32A1305C100824CFB /* Home.swift */; };
+		04B584E42A1305C100824CFB /* Home1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B584E32A1305C100824CFB /* Home1.swift */; };
 		04B584E82A13F10700824CFB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04B584E72A13F10600824CFB /* GoogleService-Info.plist */; };
 		04B584EB2A1415C600824CFB /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 04B584EA2A1415C600824CFB /* FirebaseAnalytics */; };
 		04B584ED2A1415C600824CFB /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 04B584EC2A1415C600824CFB /* FirebaseAnalyticsSwift */; };
@@ -31,6 +35,7 @@
 		04B5850D2A14BB2A00824CFB /* Height.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5850C2A14BB2A00824CFB /* Height.swift */; };
 		04B5850F2A14BB4F00824CFB /* PrevWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5850E2A14BB4F00824CFB /* PrevWeight.swift */; };
 		04B585112A14BB6900824CFB /* AftWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B585102A14BB6900824CFB /* AftWeight.swift */; };
+		04CC4EA32A1F04A200A53FCE /* REMINDERS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CC4EA22A1F04A200A53FCE /* REMINDERS.swift */; };
 		04D2E3B02A1105FB0050708E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2E3AF2A1105FB0050708E /* AppDelegate.swift */; };
 		04D2E3B22A1105FB0050708E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2E3B12A1105FB0050708E /* SceneDelegate.swift */; };
 		04D2E3B42A1105FB0050708E /* splash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2E3B32A1105FB0050708E /* splash.swift */; };
@@ -40,15 +45,20 @@
 
 /* Begin PBXFileReference section */
 		0406A9D02A16C11500F06EF2 /* ExeDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExeDetails.swift; sourceTree = "<group>"; };
+		0419E5622A190CAD0023BE1A /* WARMUP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WARMUP.swift; sourceTree = "<group>"; };
+		0419E5642A190E3C0023BE1A /* WarmUpListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmUpListViewController.swift; sourceTree = "<group>"; };
+		0419E5682A1919DF0023BE1A /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		04B4488E2A20365200E9144D /* ActivityDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailViewController.swift; sourceTree = "<group>"; };
 		04B584DE2A1166FA00824CFB /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		04B584E02A116A4A00824CFB /* SignUpScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScreen.swift; sourceTree = "<group>"; };
-		04B584E32A1305C100824CFB /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		04B584E32A1305C100824CFB /* Home1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home1.swift; sourceTree = "<group>"; };
 		04B584E72A13F10600824CFB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		04B585062A14B91F00824CFB /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		04B585082A14BAC500824CFB /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		04B5850C2A14BB2A00824CFB /* Height.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Height.swift; sourceTree = "<group>"; };
 		04B5850E2A14BB4F00824CFB /* PrevWeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrevWeight.swift; sourceTree = "<group>"; };
 		04B585102A14BB6900824CFB /* AftWeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AftWeight.swift; sourceTree = "<group>"; };
+		04CC4EA22A1F04A200A53FCE /* REMINDERS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = REMINDERS.swift; sourceTree = "<group>"; };
 		04D2E3AC2A1105FB0050708E /* FitnessApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitnessApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D2E3AF2A1105FB0050708E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04D2E3B12A1105FB0050708E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,19 +93,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0419E56C2A19601A0023BE1A /* model */ = {
+			isa = PBXGroup;
+			children = (
+				0419E5622A190CAD0023BE1A /* WARMUP.swift */,
+				04CC4EA22A1F04A200A53FCE /* REMINDERS.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
 		04B584E22A126E3A00824CFB /* controller */ = {
 			isa = PBXGroup;
 			children = (
 				04B584E02A116A4A00824CFB /* SignUpScreen.swift */,
 				04B584DE2A1166FA00824CFB /* LoginScreen.swift */,
 				04D2E3B32A1105FB0050708E /* splash.swift */,
-				04B584E32A1305C100824CFB /* Home.swift */,
+				04B584E32A1305C100824CFB /* Home1.swift */,
 				04B585062A14B91F00824CFB /* Gender.swift */,
 				04B585082A14BAC500824CFB /* Goal.swift */,
 				04B5850C2A14BB2A00824CFB /* Height.swift */,
 				04B5850E2A14BB4F00824CFB /* PrevWeight.swift */,
 				04B585102A14BB6900824CFB /* AftWeight.swift */,
 				0406A9D02A16C11500F06EF2 /* ExeDetails.swift */,
+				0419E5642A190E3C0023BE1A /* WarmUpListViewController.swift */,
+				0419E5682A1919DF0023BE1A /* Home.swift */,
+				04B4488E2A20365200E9144D /* ActivityDetailViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -119,6 +141,7 @@
 		04D2E3AE2A1105FB0050708E /* FitnessApp */ = {
 			isa = PBXGroup;
 			children = (
+				0419E56C2A19601A0023BE1A /* model */,
 				04B584E22A126E3A00824CFB /* controller */,
 				04D2E3AF2A1105FB0050708E /* AppDelegate.swift */,
 				04D2E3B12A1105FB0050708E /* SceneDelegate.swift */,
@@ -221,15 +244,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				04B585092A14BAC500824CFB /* Goal.swift in Sources */,
+				04B4488F2A20365200E9144D /* ActivityDetailViewController.swift in Sources */,
 				04D2E3B42A1105FB0050708E /* splash.swift in Sources */,
+				0419E5652A190E3C0023BE1A /* WarmUpListViewController.swift in Sources */,
+				04CC4EA32A1F04A200A53FCE /* REMINDERS.swift in Sources */,
 				04B5850F2A14BB4F00824CFB /* PrevWeight.swift in Sources */,
 				0406A9D12A16C11500F06EF2 /* ExeDetails.swift in Sources */,
 				04B585112A14BB6900824CFB /* AftWeight.swift in Sources */,
+				0419E5692A1919DF0023BE1A /* Home.swift in Sources */,
 				04B5850D2A14BB2A00824CFB /* Height.swift in Sources */,
 				04B584E12A116A4A00824CFB /* SignUpScreen.swift in Sources */,
+				0419E5632A190CAD0023BE1A /* WARMUP.swift in Sources */,
 				04B584DF2A1166FA00824CFB /* LoginScreen.swift in Sources */,
 				04D2E3B02A1105FB0050708E /* AppDelegate.swift in Sources */,
-				04B584E42A1305C100824CFB /* Home.swift in Sources */,
+				04B584E42A1305C100824CFB /* Home1.swift in Sources */,
 				04D2E3B22A1105FB0050708E /* SceneDelegate.swift in Sources */,
 				04B585072A14B91F00824CFB /* Gender.swift in Sources */,
 			);
@@ -372,6 +400,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FitnessApp/Info.plist;
+				INFOPLIST_KEY_NSMotionUsageDescription = "Please allow for step counting";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -398,6 +427,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FitnessApp/Info.plist;
+				INFOPLIST_KEY_NSMotionUsageDescription = "Please allow for step counting";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

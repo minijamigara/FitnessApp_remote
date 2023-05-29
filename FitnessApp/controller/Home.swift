@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import EventKit
 import UserNotifications
+import CoreMotion
 
 class Home: UITabBarController {
 
@@ -85,7 +86,7 @@ class NotifyVC: UIViewController
                         let imageName = "notification.png"
                         let image = UIImage(named: imageName)
                         let imageView = UIImageView(image: image!)
-                        imageView.frame = CGRect(x: 10.0, y: 10.0, width: 40.0, height: 40.0)
+                        imageView.frame = CGRect(x: 10.0, y: 10.0, width: 30.0, height: 30.0)
                         cardView.addSubview(imageView)
                         
                         var label1 = UILabel()
@@ -346,7 +347,7 @@ class AccountVC: UIViewController {
         view.backgroundColor = .black
         title = "Profile"
         
-        let imageName = "user.png"
+        let imageName = "user-2.png"
         let image = UIImage(named: imageName)
         let imageView = UIImageView(image: image!)
         
@@ -643,6 +644,7 @@ class AccountVC: UIViewController {
 
 }
 
+//landing screen
 class Landing: UIViewController {
     let userLbl = UILabel()
     
@@ -656,6 +658,9 @@ class Landing: UIViewController {
     
     var nameLabel = UILabel()
     
+    let activityMnager = CMMotionActivityManager()
+    let pedoMeter = CMPedometer()
+    
     // Firebase Firestore reference
     let db = Firestore.firestore()
     
@@ -665,6 +670,10 @@ class Landing: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Home"
+        
+        requestMotionPermission()
+        
+        
         let currentUser = Auth.auth().currentUser
         let email = currentUser?.email
         print(email as Any)
@@ -712,6 +721,61 @@ class Landing: UIViewController {
 
             } else {
                 print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
+        func requestMotionPermission() {
+            let activityManager = CMMotionActivityManager()
+            let motionPermissionStatus = CMMotionActivityManager.authorizationStatus()
+
+            switch motionPermissionStatus {
+            case .authorized:
+                // Motion activity tracking is already authorized, proceed with your code
+                StartTrackingMotionActivity()
+                print("Authorized")
+            case .notDetermined:
+                // Request permission
+                activityManager.queryActivityStarting(from: Date(), to: Date(), to: .main) { (activities, error) in
+                    if error == nil {
+                        // Permission granted, proceed with your code
+                        StartTrackingMotionActivity()
+                        print("Authorized")
+                    } else {
+                        // Permission denied or error occurred
+                        // Handle the error or prompt the user to grant permission manually
+                    }
+                }
+            case .denied, .restricted:
+                // Motion activity tracking is denied or restricted
+                // Handle the denied or restricted state, prompt the user to grant permission manually
+                break
+            @unknown default:
+                break
+            }
+        }
+        
+        func StartTrackingMotionActivity(){
+            if CMMotionActivityManager.isActivityAvailable(){
+                self.activityMnager.startActivityUpdates(to: OperationQueue.main){(data)in
+                    DispatchQueue.main.async {
+                       if let activity = data{
+                           if activity.running == true{
+                               print("running")
+                           }
+                           else if activity.walking == true{
+                               print("walking")
+                           }
+                           else if activity.automotive == true{
+                               print("automotive")
+                           }
+                        }
+                    }
+                }
+            }else{
+                let alert = UIAlertController(title: "Motion Activity Not Supported",
+                                                      message: "Motion activity tracking is not supported on this device.",
+                                                      preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        present(alert, animated: true, completion: nil)
             }
         }
         
