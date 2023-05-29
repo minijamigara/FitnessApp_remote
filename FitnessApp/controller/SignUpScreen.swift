@@ -68,12 +68,21 @@ class SignUpScreen: UIViewController {
             ])
         noAccLbl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150).isActive = true
         
+        /*noAccLbl.isUserInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gotoSignIn))
+        noAccLbl.addGestureRecognizer(tapGestureRecognizer)*/
+        
         noAccLbl.isUserInteractionEnabled = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gotoSignIn))
         noAccLbl.addGestureRecognizer(tapGestureRecognizer)
 
     }
     
+    /*@objc func gotoSignIn(){
+        let login = LoginScreen()
+        login.title = "SignIn"
+        navigationController?.pushViewController(login, animated: true)
+    }*/
     @objc func gotoSignIn(){
         let login = LoginScreen()
         login.title = "SignIn"

@@ -359,10 +359,13 @@ class AftWeight: UIViewController {
                 }
             }
         }
-        
-        let home = Home()
-        home.title = "Home"
-        navigationController?.pushViewController(home, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            // Code to be executed after the delay
+            let home = Home()
+            home.title = "Home"
+            self.navigationController?.pushViewController(home, animated: true)
+        }
+       
     }
     
     func getBMIData(){

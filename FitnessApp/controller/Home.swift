@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 import EventKit
 import UserNotifications
 import CoreMotion
@@ -667,6 +668,11 @@ class Landing: UIViewController {
     // Data source for the card views
     var Waarmup: [WARMUP] = []
     
+    let now = Date()
+    let calendar = Calendar.current
+    
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Home"
@@ -831,6 +837,7 @@ class Landing: UIViewController {
         yPosition += 0.0
         
         //welcome text
+        let hour = calendar.component(.hour, from: now)
         if(hour < 12 && hour > 0){
             //welcomeLbl.text = hour.codingKey.stringValue
             welcomeLable.text = "Good morning"

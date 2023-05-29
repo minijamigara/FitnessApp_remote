@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 
 class ExeDetails: UIViewController {
@@ -24,6 +25,7 @@ class ExeDetails: UIViewController {
     let TimerLbl = UILabel()
     let StartStopBtn = UIButton()
     let resetBtn = UIButton()
+    let addBtn = UIImage()
     
     var timer : Timer = Timer()
     var count : Int = 0
@@ -54,6 +56,7 @@ class ExeDetails: UIViewController {
         configureTimeLbl()
         configureStartBtn()
         configureResetBtn()
+        configureAddImgBtn()
         
         StartStopBtn.setTitleColor(UIColor.gray, for: .normal)
         //TimerLbl.frame = CGRect(x: 0, y: 400, width: 200, height: 50)
@@ -61,6 +64,128 @@ class ExeDetails: UIViewController {
         
     }
     
+    func configureAddImgBtn(){
+        let imageName = "check-list.png"
+        let image = UIImage(named: imageName)
+        let imageView = UIImageView(image: image!)
+        
+        imageView.frame = CGRect(x: 170, y: 580, width: 40, height: 40)
+        imageView.layer.masksToBounds = false
+        imageView.layer.cornerRadius = imageView.frame.size.height/2
+        imageView.clipsToBounds = true
+        view.addSubview(imageView)
+        
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            ])
+        imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 600).isActive = true
+        
+        imageView.isUserInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector (exerciseCompletion))
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc func exerciseCompletion(){
+        print("click add button")
+        //let burned_cal : String
+        
+        let doneExercise = exeName.text
+        if(doneExercise == "Pull ups"){
+            getCaloies(val: 5)
+            getHours(val: warmUp.exe_hours)
+        }else if(doneExercise == "Push ups"){
+            getCaloies(val: 6)
+            getHours(val: warmUp.exe_hours)
+        }else if(doneExercise == "Squats"){
+            getCaloies(val: 7)
+            getHours(val: warmUp.exe_hours)
+        }else if(doneExercise == "Barbel curl"){
+            getCaloies(val: 8)
+            getHours(val: warmUp.exe_hours)
+        }else if(doneExercise == "Chin ups"){
+            getCaloies(val: 4)
+            getHours(val: warmUp.exe_hours)
+        }else if(doneExercise == "Bar Preacher Curl"){
+            getCaloies(val: 2)
+            getHours(val: warmUp.exe_hours)
+        }else if(doneExercise == "Bar Preacher Curl"){
+            getCaloies(val: 1)
+            getHours(val: warmUp.exe_hours)
+        }else if(doneExercise == "Bar Preacher Curl"){
+            getCaloies(val: 3)
+            getHours(val: warmUp.exe_hours)
+        }
+        print(exeName.text as Any)
+        //need to find out which is the exercise by reading lable text val
+        //retrieve firebase value
+        //add current val to retrieved valu
+        //update db with the current val
+    }
+    func getCaloies(val : Int){
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser
+        let email = currentUser?.email
+        let collectionRef = db.collection("user_exe_tbl")
+        let docRef = collectionRef.document(email!)
+        db.collection("user_exe_tbl").document(email!).getDocument { [self] (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                
+                if var tot_cal = data?["burned_calories"] as? Int {
+                    print("Tot cal: \(tot_cal)")
+                    //BMIValLbl.text = String(tot_cal)
+                    var burn_cal : Int = tot_cal + val
+                    
+                    docRef.updateData(["burned_calories": burn_cal as Any]) { error in
+                        print("Burn cal: \(burn_cal)")
+                        if let error = error {
+                            // Handle the error
+                            print("Error updating document: \(error)")
+                        } else {
+                            // Field added successfully
+                            print("Field successfully added")
+                        }
+                    }
+                }
+
+            } else {
+                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
+    }
+    func getHours(val : Int){
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser
+        let email = currentUser?.email
+        let collectionRef = db.collection("user_exe_tbl")
+        let docRef = collectionRef.document(email!)
+        db.collection("user_exe_tbl").document(email!).getDocument { [self] (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                
+                if var tot_hours = data?["total_exercise_hrs"] as? Int {
+                    print("Tot hrs: \(tot_hours)")
+                    //BMIValLbl.text = String(tot_cal)
+                    var exercise_hours : Int = tot_hours + val
+                    
+                    docRef.updateData(["total_exercise_hrs": exercise_hours as Any]) { error in
+                        print("Burn cal: \(exercise_hours)")
+                        if let error = error {
+                            // Handle the error
+                            print("Error updating document: \(error)")
+                        } else {
+                            // Field added successfully
+                            print("Field successfully added")
+                        }
+                    }
+                }
+
+            } else {
+                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
+    }
+
     func configureTimeLbl(){
         TimerLbl.text = "00:00:00"
         TimerLbl.textAlignment = .center
