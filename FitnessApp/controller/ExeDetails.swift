@@ -42,8 +42,6 @@ class ExeDetails: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,8 +58,6 @@ class ExeDetails: UIViewController {
         
         StartStopBtn.setTitleColor(UIColor.gray, for: .normal)
         //TimerLbl.frame = CGRect(x: 0, y: 400, width: 200, height: 50)
-                      
-        
     }
     
     func configureAddImgBtn(){
@@ -92,28 +88,28 @@ class ExeDetails: UIViewController {
         let doneExercise = exeName.text
         if(doneExercise == "Pull ups"){
             getCaloies(val: 5)
-            getHours(val: warmUp.exe_hours)
+            getHours(val1: warmUp.exe_hours)
         }else if(doneExercise == "Push ups"){
             getCaloies(val: 6)
-            getHours(val: warmUp.exe_hours)
+            getHours(val1: warmUp.exe_hours)
         }else if(doneExercise == "Squats"){
             getCaloies(val: 7)
-            getHours(val: warmUp.exe_hours)
+            getHours(val1: warmUp.exe_hours)
         }else if(doneExercise == "Barbel curl"){
             getCaloies(val: 8)
-            getHours(val: warmUp.exe_hours)
+            getHours(val1: warmUp.exe_hours)
         }else if(doneExercise == "Chin ups"){
             getCaloies(val: 4)
-            getHours(val: warmUp.exe_hours)
+            getHours(val1: warmUp.exe_hours)
         }else if(doneExercise == "Bar Preacher Curl"){
             getCaloies(val: 2)
-            getHours(val: warmUp.exe_hours)
+            getHours(val1: warmUp.exe_hours)
         }else if(doneExercise == "Bar Preacher Curl"){
             getCaloies(val: 1)
-            getHours(val: warmUp.exe_hours)
+            getHours(val1: warmUp.exe_hours)
         }else if(doneExercise == "Bar Preacher Curl"){
             getCaloies(val: 3)
-            getHours(val: warmUp.exe_hours)
+            getHours(val1: warmUp.exe_hours)
         }
         print(exeName.text as Any)
         //need to find out which is the exercise by reading lable text val
@@ -153,7 +149,7 @@ class ExeDetails: UIViewController {
             }
         }
     }
-    func getHours(val : Int){
+    func getHours(val1 : Int){
         let db = Firestore.firestore()
         let currentUser = Auth.auth().currentUser
         let email = currentUser?.email
@@ -164,12 +160,12 @@ class ExeDetails: UIViewController {
                 let data = document.data()
                 
                 if var tot_hours = data?["total_exercise_hrs"] as? Int {
-                    print("Tot hrs: \(tot_hours)")
+                    //print("Tot hrs: \(tot_hours)")
                     //BMIValLbl.text = String(tot_cal)
-                    var exercise_hours : Int = tot_hours + val
+                    var exercise_hours : Int = tot_hours + val1
                     
                     docRef.updateData(["total_exercise_hrs": exercise_hours as Any]) { error in
-                        print("Burn cal: \(exercise_hours)")
+                        print("Tot hrs: \(exercise_hours)")
                         if let error = error {
                             // Handle the error
                             print("Error updating document: \(error)")
@@ -182,6 +178,7 @@ class ExeDetails: UIViewController {
 
             } else {
                 print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+                let docRef = db.collection("user_exe_tbl").document(email!)
             }
         }
     }

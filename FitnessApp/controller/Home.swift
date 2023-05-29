@@ -757,6 +757,28 @@ class Landing: UIViewController {
             @unknown default:
                 break
             }
+            
+            createTableField()
+        }
+        func createTableField(){
+            let db = Firestore.firestore()
+            let currentUser = Auth.auth().currentUser
+            let email = currentUser?.email
+            let collectionRef = db.collection("user_exe_tbl")
+            let docRef = db.collection("user_exe_tbl").document(email!)
+            let data: [String: Any] = [
+                "burned_calories" : 0,
+                "total_exercise_hrs" : 0// Add more fields as needed
+            ]
+            docRef.setData(data) { error in
+                if let error = error {
+                    // Handle the error
+                    print("Error writing document: \(error)")
+                } else {
+                    // Data written successfully
+                    print("Calories successfully written")
+                }
+            }
         }
         
         func StartTrackingMotionActivity(){
