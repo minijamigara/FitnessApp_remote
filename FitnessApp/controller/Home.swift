@@ -369,6 +369,8 @@ class AccountVC: UIViewController {
         configureUsernameTxt()
         configureSaveBtn()
         
+        getTotHrs()
+        
         let db = Firestore.firestore()
         let currentUser = Auth.auth().currentUser
         let email = currentUser?.email
@@ -395,6 +397,21 @@ class AccountVC: UIViewController {
                 print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
             }
         }
+    /////////////////
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Call your function here
+        getTotHrs()
+    }
+    
+    func getTotHrs(){
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser
+        let email = currentUser?.email
+        let collectionRef = db.collection("user_exe_tbl")
+        let docRef = collectionRef.document(email!)
         db.collection("user_exe_tbl").document(email!).getDocument { [self] (document, error) in
             if let document = document, document.exists {
                 let data = document.data()
@@ -408,7 +425,6 @@ class AccountVC: UIViewController {
                 print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
             }
         }
-        
     }
     func configureLoginLableText(){
         userLbl.text = "Minija"
