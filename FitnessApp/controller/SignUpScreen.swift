@@ -214,33 +214,7 @@ class SignUpScreen: UIViewController {
             loginLbl.topAnchor.constraint(equalTo: rectrangleView.topAnchor,constant: 15)
             ])
     }
-    /*
-    func configureUsernameTxt(){
-        usernameTxt.returnKeyType = .done
-        usernameTxt.autocorrectionType = .no
-        usernameTxt.layer.borderWidth = 1.5
-        usernameTxt.layer.borderColor = UIColor.white.cgColor
-        usernameTxt.placeholder = "Username"
-        usernameTxt.textColor = .white
-        usernameTxt.textAlignment = .center
-        
-        setUpUsernameTxt()
-    }
-    func setUpUsernameTxt(){
-        rectrangleView.addSubview(usernameTxt)
-        
-        usernameTxt.layer.cornerRadius = 20
-        usernameTxt.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            
-            usernameTxt.widthAnchor.constraint(equalToConstant: 350),
-            usernameTxt.heightAnchor.constraint(equalToConstant: 40),
-            usernameTxt.centerXAnchor.constraint(equalTo: rectrangleView.centerXAnchor),
-            usernameTxt.topAnchor.constraint(equalTo: rectrangleView.topAnchor,constant: 90)
-            
-        ])
-    }
-    */
+
     func configureEmailTxt(){
         emailTxt.returnKeyType = .done
         emailTxt.autocorrectionType = .no
@@ -292,31 +266,4 @@ class SignUpScreen: UIViewController {
             passwordTxt.topAnchor.constraint(equalTo: rectrangleView.topAnchor,constant: 210)
         ])
     }
-    /*
-    func configureConPasswordTxt(){
-        con_passwordTxt.returnKeyType = .done
-        con_passwordTxt.autocorrectionType = .no
-        con_passwordTxt.layer.borderWidth = 1.5
-        con_passwordTxt.layer.borderColor = UIColor.white.cgColor
-        con_passwordTxt.placeholder =  "Confirm password"
-        con_passwordTxt.textColor = .white
-        con_passwordTxt.textAlignment = .center
-        
-        setUpConPasswordTxt()
-    }
-    func setUpConPasswordTxt(){
-        rectrangleView.addSubview(con_passwordTxt)
-        
-        con_passwordTxt.layer.cornerRadius = 20
-        con_passwordTxt.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            
-            con_passwordTxt.widthAnchor.constraint(equalToConstant: 350),
-            con_passwordTxt.heightAnchor.constraint(equalToConstant: 40),
-            con_passwordTxt.centerXAnchor.constraint(equalTo: rectrangleView.centerXAnchor),
-            con_passwordTxt.topAnchor.constraint(equalTo: rectrangleView.topAnchor,constant: 270)
-        ])
-    }*/
-    
-
 }

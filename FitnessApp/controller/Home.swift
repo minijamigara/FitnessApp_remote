@@ -272,12 +272,6 @@ class NotifyVC: UIViewController
                                     label1.font = UIFont.systemFont(ofSize: 18.0, weight: .semibold)
                                     cardView.addSubview(label1)
                                 }
-                                                  
-                                /*var label2 = UILabel()
-                                label2.text = bodyTextField.text
-                                label2 = UILabel(frame: CGRect(x: 120.0, y: 20.0, width: cardView.frame.width - 70.0, height: 30.0))
-                                label2.font = UIFont.systemFont(ofSize: 16.0, weight: .medium)
-                                cardView.addSubview(label2)*/
                                 
                                 reminderTextField.text = nil
                                 bodyTextField.text = nil
@@ -381,7 +375,7 @@ class AccountVC: UIViewController {
             if let document = document, document.exists {
                 let data = document.data()
                 
-                if let bmi = data?["BMI"] as? Int {
+                if let bmi = data?["BMI"] as? Float {
                     print("BMI: \(bmi)")
                     BMIValLbl.text = String(bmi)
                 }
@@ -705,7 +699,7 @@ class Landing: UIViewController {
             if let document = document, document.exists {
                 let data = document.data()
                 
-                if let bmi = data?["BMI"] as? Int {
+                if let bmi = data?["BMI"] as? Float {
                     let db = Firestore.firestore()
                     if(bmi > 40){
                         // Fetch the data from Firestore
@@ -775,27 +769,7 @@ class Landing: UIViewController {
                 break
             }
             
-            createTableField()
-        }
-        func createTableField(){
-            let db = Firestore.firestore()
-            let currentUser = Auth.auth().currentUser
-            let email = currentUser?.email
-            let collectionRef = db.collection("user_exe_tbl")
-            let docRef = db.collection("user_exe_tbl").document(email!)
-            let data: [String: Any] = [
-                "burned_calories" : 0,
-                "total_exercise_hrs" : 0// Add more fields as needed
-            ]
-            docRef.setData(data) { error in
-                if let error = error {
-                    // Handle the error
-                    print("Error writing document: \(error)")
-                } else {
-                    // Data written successfully
-                    print("Calories successfully written")
-                }
-            }
+            //createTableField()
         }
         
         func StartTrackingMotionActivity(){
@@ -823,23 +797,6 @@ class Landing: UIViewController {
                         present(alert, animated: true, completion: nil)
             }
         }
-        
-        
-        // Fetch the data from Firestore
-        /*db.collection("beginner_tbl").getDocuments() { (querySnapshot, error) in
-            if let error = error {
-                print("Error getting documents: \(error)")
-            } else {
-                var newWARMUP: [WARMUP] = []
-                for document in querySnapshot!.documents {
-                    let Waarmup = WARMUP(snapshot: document)
-                    newWARMUP.append(Waarmup)
-                }
-                self.Waarmup = newWARMUP
-                self.addCardViews()
-                print("Fetched \(self.Waarmup.count) WARMUP")
-            }
-        }*/
         
         // Do any additional setup after loading the view.
     }
@@ -1008,21 +965,8 @@ class Landing: UIViewController {
             ])
         calsLbl.topAnchor.constraint(equalTo: rectrangleCal.topAnchor, constant: 50).isActive = true
         
-        let collectionRef1 = db.collection("user_exe_tbl")
-        let docRef1 = db.collection("user_exe_tbl").document(email!)
-        db.collection("user_exe_tbl").document(email!).getDocument { [self] (document, error) in
-            if let document = document, document.exists {
-                let data = document.data()
-                
-                if let burnCal = data?["burned_calories"] as? Int {
-                    print("Total cal: \(burnCal)")
-                    calsLbl.text = String(burnCal)
-                }
+        getTotCal()
 
-            } else {
-                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
-            }
-        }
         
         calLbl.text = "Burned Calories"
         calLbl.textAlignment = .center
@@ -1071,12 +1015,6 @@ class Landing: UIViewController {
             durationLabel.font = UIFont.systemFont(ofSize: 16.0, weight: .medium)
             stackView.addArrangedSubview(durationLabel)
             
-            /*let repetitionsLabel = UILabel()
-            repetitionsLabel.text = "repetitions:\(warm.exe_rep)"
-            repetitionsLabel.font = UIFont.systemFont(ofSize: 22.0, weight: .semibold)
-            repetitionsLabel.textAlignment = .left
-            stackView.addArrangedSubview(repetitionsLabel)*/
-            
             cardView.addSubview(stackView)
             stackView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -1086,10 +1024,6 @@ class Landing: UIViewController {
                 stackView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10.0)
             ])
             
-            /*let difficultyIcon = UIImageView(image: UIImage(systemName: "bolt.fill"))
-            difficultyIcon.tintColor = .systemYellow
-            difficultyIcon.frame = CGRect(x: cardView.frame.width - 45.0, y: 25.0, width: 20.0, height: 20.0)
-            cardView.addSubview(difficultyIcon)*/
             
             let imageName1 = "play-button.png"
             let image1 = UIImage(named: imageName1)
@@ -1124,30 +1058,29 @@ class Landing: UIViewController {
         navigationController?.pushViewController(exeDetails, animated: true)
     }
     
-    /*@objc func cardTapped(){
-        /*
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Call your function here
+        getTotCal()
+    }
+    
+    func getTotCal(){
         let db = Firestore.firestore()
         let currentUser = Auth.auth().currentUser
         let email = currentUser?.email
         let collectionRef = db.collection("user_exe_tbl")
-        let docRef = collectionRef.document(email!)
-        let name = nameLabel.text
-        docRef.updateData([name: name as Any]) { error in
-            if let error = error {
-                // Handle the error
-                print("Error updating document: \(error)")
+        let docRef = db.collection("user_exe_tbl").document(email!)
+        db.collection("user_exe_tbl").document(email!).getDocument { [self] (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                
+                if let burnCal = data?["burned_calories"] as? Int {
+                    print("Total cal: \(burnCal)")
+                    calsLbl.text = String(burnCal)
+                }
             } else {
-                // Field added successfully
-                print("Field successfully added")
+                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
             }
-        }*/
-
-        let exe_details = ExeDetails()
-        exe_details.title = "Details"
-        navigationController?.pushViewController(exe_details, animated: true)
-    }*/
-
-    
-
-    
+        }
+    }
 }

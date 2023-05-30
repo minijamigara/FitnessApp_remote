@@ -5,12 +5,6 @@
 //  Created by Mac on 2023-05-17.
 //
 
-//
-//  Gender.swift
-//  FitnessApp
-//
-//  Created by Mac on 2023-05-17.
-//
 
 import UIKit
 import FirebaseAuth
@@ -282,7 +276,9 @@ class Height: UIViewController {
         else if(val == "feet"){
             print(val)
             let heightFeet = heightTxt.text
-            docRef.updateData(["height_measurement_type": "feet" , "height": heightFeet as Any]) { error in
+            let floatHeight = Float(heightFeet!)
+            let heightInCentimeters = floatHeight! * 30.48
+            docRef.updateData(["height_measurement_type": "feet" , "height": String(heightInCentimeters) as Any]) { error in
                 if let error = error {
                     // Handle the error
                     print("Error updating document: \(error)")

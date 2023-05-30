@@ -20,18 +20,10 @@ class LoginScreen: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        /*let imageName = "welcomeImg.jpg"
-        let image = UIImage(named: imageName)
-        let imageView = UIImageView(image: image!)*/
-        
-        //imageView.frame = CGRect(x: 0, y: 30, width: 475, height: 800)
-        //imageView.contentMode = .scaleAspectFill - no need
-        //view.addSubview(imageView)
         
         view.backgroundColor = .white
         
         rectrangleView.frame = CGRect(x:0, y: 350, width: 393 , height: 600)
-        //rectrangleView.backgroundColor = UIColor.init(white: 1, alpha: 0.5)
         rectrangleView.backgroundColor = UIColor.black
         rectrangleView.layer.opacity = 0.9
         rectrangleView.layer.cornerRadius = 90

@@ -272,7 +272,9 @@ class PrevWeight: UIViewController {
         else if(val == "pounds"){
             //print(val)
             let weightlbs = weightTxt.text
-            docRef.updateData(["weight_measurement_type": "lbs" , "weight": weightlbs as Any]) { error in
+            let floatWeight = Float(weightlbs!)!
+            let weightInKilograms = floatWeight * 0.45359237
+            docRef.updateData(["weight_measurement_type": "lbs" , "weight": weightInKilograms as Any]) { error in
                 if let error = error {
                     // Handle the error
                     print("Error updating document: \(error)")

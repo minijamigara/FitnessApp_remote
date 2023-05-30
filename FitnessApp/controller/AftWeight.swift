@@ -348,7 +348,9 @@ class AftWeight: UIViewController {
         else if(val == "pounds"){
             //print(val)
             let weightPound = weightTxt.text
-            docRef.updateData(["measurement_type": "lbs" , "target_weight": weightPound as Any]) { error in
+            let floatWeight = Float(weightPound!)!
+            let weightInKilograms = floatWeight * 0.45359237
+            docRef.updateData(["measurement_type": "lbs" , "target_weight": weightInKilograms as Any]) { error in
                 if let error = error {
                     // Handle the error
                     print("Error updating document: \(error)")
@@ -374,11 +376,11 @@ class AftWeight: UIViewController {
         let email = currentUser?.email
         let collectionRef = db.collection("user_tbl")
         let docRef = collectionRef.document(email!)
-        db.collection("user_tbl").document(email!).getDocument { [self] (document, error) in
+        db.collection("user_tbl").document(email!).getDocument {(document, error) in
             if let document = document, document.exists {
                 let data = document.data()
                 //print(data as Any)
-                db.collection("user_tbl").document(email!).getDocument { [self] (document, error) in
+                db.collection("user_tbl").document(email!).getDocument {(document, error) in
                     if let document = document, document.exists {
                         let data = document.data()
                         
@@ -386,10 +388,10 @@ class AftWeight: UIViewController {
                             print("Height: \(StrHeight)")
                             if let StrWeight = data?["weight"] as? String {
                                 print("Weight: \(StrWeight)")
-                                let IntHeight = Int(StrHeight)
-                                let Intweight = Int(StrWeight)
-                                //let heightInMeters = IntHeight! / 100
-                                var BMI_val : Int =  (Intweight! / (Intweight! * Intweight!))
+                                let FloatHeight = Float(StrHeight)
+                                let Floatweight = Float(StrWeight)
+                                let heightInMeters = FloatHeight! / 100
+                                let BMI_val : Float =  (Floatweight! / (heightInMeters * heightInMeters))
                                 print(BMI_val)
                                 docRef.updateData(["BMI": BMI_val as Any]) { error in
                                     if let error = error {
@@ -397,7 +399,7 @@ class AftWeight: UIViewController {
                                         print("Error updating document: \(error)")
                                     } else {
                                         // Field added successfully
-                                        print("Field successfully added")
+                                        print("BMI successfully added")
                                     }
                                 }
                             }
