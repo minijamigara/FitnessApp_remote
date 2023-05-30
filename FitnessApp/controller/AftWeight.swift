@@ -175,7 +175,7 @@ class AftWeight: UIViewController {
         weightTxt.autocorrectionType = .no
         weightTxt.layer.borderWidth = 1.5
         weightTxt.layer.borderColor = UIColor.white.cgColor
-        weightTxt.text = "87"
+        weightTxt.placeholder = "00"
         weightTxt.autocapitalizationType = .none
         weightTxt.textColor = .white
         weightTxt.textAlignment = .center
@@ -325,49 +325,59 @@ class AftWeight: UIViewController {
     }
     
     @objc func gotoAftWeight(){
-        let val = toggleSwitchValueChanged()
-        let db = Firestore.firestore()
-        let currentUser = Auth.auth().currentUser
-        let email = currentUser?.email
-        let collectionRef = db.collection("user_tbl")
-        let docRef = collectionRef.document(email!)
-        if(val == "killos"){
-            //print(val)
-            let weightKg = weightTxt.text
-            docRef.updateData(["measurement_type": "kg" , "target_weight": weightKg as Any]) { error in
-                if let error = error {
-                    // Handle the error
-                    print("Error updating document: \(error)")
-                } else {
-                    // Field added successfully
-                    print("Field successfully added")
-                    self.getBMIData()
+        
+        if let text = weightTxt.text, text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            // The text field is empty
+            let alert = UIAlertController(title: "Error",
+                                                  message: "Please eneter target weight to proceed.",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    present(alert, animated: true, completion: nil)
+        }else{
+            let val = toggleSwitchValueChanged()
+            let db = Firestore.firestore()
+            let currentUser = Auth.auth().currentUser
+            let email = currentUser?.email
+            let collectionRef = db.collection("user_tbl")
+            let docRef = collectionRef.document(email!)
+            if(val == "killos"){
+                //print(val)
+                let weightKg = weightTxt.text
+                docRef.updateData(["measurement_type": "kg" , "target_weight": weightKg as Any]) { error in
+                    if let error = error {
+                        // Handle the error
+                        print("Error updating document: \(error)")
+                    } else {
+                        // Field added successfully
+                        print("Field successfully added")
+                        self.getBMIData()
+                    }
                 }
             }
-        }
-        else if(val == "pounds"){
-            //print(val)
-            let weightPound = weightTxt.text
-            let floatWeight = Float(weightPound!)!
-            let weightInKilograms = floatWeight * 0.45359237
-            docRef.updateData(["measurement_type": "lbs" , "target_weight": weightInKilograms as Any]) { error in
-                if let error = error {
-                    // Handle the error
-                    print("Error updating document: \(error)")
-                } else {
-                    // Field added successfully
-                    print("Field successfully added")
-                    self.getBMIData()
+            else if(val == "pounds"){
+                //print(val)
+                let weightPound = weightTxt.text
+                let floatWeight = Float(weightPound!)!
+                let weightInKilograms = floatWeight * 0.45359237
+                docRef.updateData(["measurement_type": "lbs" , "target_weight": weightInKilograms as Any]) { error in
+                    if let error = error {
+                        // Handle the error
+                        print("Error updating document: \(error)")
+                    } else {
+                        // Field added successfully
+                        print("Field successfully added")
+                        self.getBMIData()
+                    }
                 }
             }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                // Code to be executed after the delay
+                let home = Username()
+                home.title = "Username"
+                self.navigationController?.pushViewController(home, animated: true)
+            }
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            // Code to be executed after the delay
-            let home = Username()
-            home.title = "Username"
-            self.navigationController?.pushViewController(home, animated: true)
-        }
-       
+        
     }
     
     func getBMIData(){

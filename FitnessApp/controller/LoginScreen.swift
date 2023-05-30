@@ -23,7 +23,7 @@ class LoginScreen: UIViewController {
         
         navigationItem.hidesBackButton = true
         
-        view.backgroundColor = .white
+        view.backgroundColor = .systemPurple
         
         rectrangleView.frame = CGRect(x:0, y: 350, width: 393 , height: 600)
         rectrangleView.backgroundColor = UIColor.black
@@ -80,7 +80,7 @@ class LoginScreen: UIViewController {
         loginBtn.layer.borderColor = UIColor.orange.cgColor
         loginBtn.layer.backgroundColor = UIColor.orange.cgColor
 
-        loginBtn.setTitle("Login", for: .normal)
+        loginBtn.setTitle("SignIn", for: .normal)
         //loginBtn.setImage(UIImage(systemName: "arrow.forward"), for: .normal)
         loginBtn.semanticContentAttribute = .forceRightToLeft
         

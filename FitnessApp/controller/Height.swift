@@ -171,7 +171,7 @@ class Height: UIViewController {
         heightTxt.autocorrectionType = .no
         heightTxt.layer.borderWidth = 1.5
         heightTxt.layer.borderColor = UIColor.white.cgColor
-        heightTxt.text = "00"
+        heightTxt.placeholder = "00"
         heightTxt.autocapitalizationType = .none
         heightTxt.textColor = .white
         heightTxt.textAlignment = .center
@@ -254,44 +254,54 @@ class Height: UIViewController {
     }
     
     @objc func gotoHeight(){
-        let val = toggleSwitchValueChanged()
-        let db = Firestore.firestore()
-        let currentUser = Auth.auth().currentUser
-        let email = currentUser?.email
-        let collectionRef = db.collection("user_tbl")
-        let docRef = collectionRef.document(email!)
-        if(val == "cm"){
-            print(val)
-            let heightCm = heightTxt.text
-            docRef.updateData(["height_measurement_type": "cm" , "height": heightCm as Any]) { error in
-                if let error = error {
-                    // Handle the error
-                    print("Error updating document: \(error)")
-                } else {
-                    // Field added successfully
-                    print("Field successfully added")
+        if let text = heightTxt.text, text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            // The text field is empty
+            let alert = UIAlertController(title: "Error",
+                                                  message: "Please eneter height to proceed.",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    present(alert, animated: true, completion: nil)
+        }else{
+            let val = toggleSwitchValueChanged()
+            let db = Firestore.firestore()
+            let currentUser = Auth.auth().currentUser
+            let email = currentUser?.email
+            let collectionRef = db.collection("user_tbl")
+            let docRef = collectionRef.document(email!)
+            if(val == "cm"){
+                print(val)
+                let heightCm = heightTxt.text
+                docRef.updateData(["height_measurement_type": "cm" , "height": heightCm as Any]) { error in
+                    if let error = error {
+                        // Handle the error
+                        print("Error updating document: \(error)")
+                    } else {
+                        // Field added successfully
+                        print("Field successfully added")
+                    }
                 }
             }
-        }
-        else if(val == "feet"){
-            print(val)
-            let heightFeet = heightTxt.text
-            let floatHeight = Float(heightFeet!)
-            let heightInCentimeters = floatHeight! * 30.48
-            docRef.updateData(["height_measurement_type": "feet" , "height": String(heightInCentimeters) as Any]) { error in
-                if let error = error {
-                    // Handle the error
-                    print("Error updating document: \(error)")
-                } else {
-                    // Field added successfully
-                    print("Field successfully added")
+            else if(val == "feet"){
+                print(val)
+                let heightFeet = heightTxt.text
+                let floatHeight = Float(heightFeet!)
+                let heightInCentimeters = floatHeight! * 30.48
+                docRef.updateData(["height_measurement_type": "feet" , "height": String(heightInCentimeters) as Any]) { error in
+                    if let error = error {
+                        // Handle the error
+                        print("Error updating document: \(error)")
+                    } else {
+                        // Field added successfully
+                        print("Field successfully added")
+                    }
                 }
             }
+            
+            let prev_weight = PrevWeight()
+            prev_weight.title = "Current weight"
+            navigationController?.pushViewController(prev_weight, animated: true)
         }
         
-        let prev_weight = PrevWeight()
-        prev_weight.title = "Current weight"
-        navigationController?.pushViewController(prev_weight, animated: true)
     }
 
 }

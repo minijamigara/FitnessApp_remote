@@ -167,7 +167,7 @@ class PrevWeight: UIViewController {
         weightTxt.autocorrectionType = .no
         weightTxt.layer.borderWidth = 1.5
         weightTxt.layer.borderColor = UIColor.white.cgColor
-        weightTxt.text = "87"
+        weightTxt.placeholder = "00"
         weightTxt.autocapitalizationType = .none
         weightTxt.textColor = .white
         weightTxt.textAlignment = .center
@@ -250,44 +250,55 @@ class PrevWeight: UIViewController {
     }
     
     @objc func gotoTargetWeight(){
-        let val = toggleSwitchValueChanged()
-        let db = Firestore.firestore()
-        let currentUser = Auth.auth().currentUser
-        let email = currentUser?.email
-        let collectionRef = db.collection("user_tbl")
-        let docRef = collectionRef.document(email!)
-        if(val == "killos"){
-            //print(val)
-            let weightKg = weightTxt.text
-            docRef.updateData(["weight_measurement_type": "kg" , "weight": weightKg as Any]) { error in
-                if let error = error {
-                    // Handle the error
-                    print("Error updating document: \(error)")
-                } else {
-                    // Field added successfully
-                    print("Field successfully added")
-                }
-            }
-        }
-        else if(val == "pounds"){
-            //print(val)
-            let weightlbs = weightTxt.text
-            let floatWeight = Float(weightlbs!)!
-            let weightInKilograms = floatWeight * 0.45359237
-            docRef.updateData(["weight_measurement_type": "lbs" , "weight": weightInKilograms as Any]) { error in
-                if let error = error {
-                    // Handle the error
-                    print("Error updating document: \(error)")
-                } else {
-                    // Field added successfully
-                    print("Field successfully added")
-                }
-            }
-        }
         
-        let aft_weight = AftWeight()
-        aft_weight.title = "Target weight"
-        navigationController?.pushViewController(aft_weight, animated: true)
+        if let text = weightTxt.text, text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            // The text field is empty
+            let alert = UIAlertController(title: "Error",
+                                                  message: "Please eneter current weight to proceed.",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    present(alert, animated: true, completion: nil)
+        }else{
+            let val = toggleSwitchValueChanged()
+            let db = Firestore.firestore()
+            let currentUser = Auth.auth().currentUser
+            let email = currentUser?.email
+            let collectionRef = db.collection("user_tbl")
+            let docRef = collectionRef.document(email!)
+            if(val == "killos"){
+                //print(val)
+                let weightKg = weightTxt.text
+                docRef.updateData(["weight_measurement_type": "kg" , "weight": weightKg as Any]) { error in
+                    if let error = error {
+                        // Handle the error
+                        print("Error updating document: \(error)")
+                    } else {
+                        // Field added successfully
+                        print("Field successfully added")
+                    }
+                }
+            }
+            else if(val == "pounds"){
+                //print(val)
+                let weightlbs = weightTxt.text
+                let floatWeight = Float(weightlbs!)!
+                let weightInKilograms = floatWeight * 0.45359237
+                docRef.updateData(["weight_measurement_type": "lbs" , "weight": weightInKilograms as Any]) { error in
+                    if let error = error {
+                        // Handle the error
+                        print("Error updating document: \(error)")
+                    } else {
+                        // Field added successfully
+                        print("Field successfully added")
+                    }
+                }
+            }
+            
+            let aft_weight = AftWeight()
+            aft_weight.title = "Target weight"
+            navigationController?.pushViewController(aft_weight, animated: true)
+        }
+
     }
 
 }

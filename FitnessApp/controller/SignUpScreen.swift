@@ -30,7 +30,7 @@ class SignUpScreen: UIViewController {
         //imageView.contentMode = .scaleAspectFill - no need
         //view.addSubview(imageView)
         
-        view.backgroundColor = .white
+        view.backgroundColor = .systemPurple
         
         rectrangleView.frame = CGRect(x:0, y: 350, width: 393 , height: 600)
         //rectrangleView.backgroundColor = UIColor.init(white: 1, alpha: 0.5)

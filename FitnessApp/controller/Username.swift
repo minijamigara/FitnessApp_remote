@@ -117,12 +117,12 @@ class Username: UIViewController {
     func setupUserTxt(){
         self.view.addSubview(userTxt)
         
-        userTxt.layer.cornerRadius = 5
+        userTxt.layer.cornerRadius =  20
         userTxt.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             
             userTxt.widthAnchor.constraint(equalToConstant: 350),
-            userTxt.heightAnchor.constraint(equalToConstant: 40),
+            userTxt.heightAnchor.constraint(equalToConstant: 50),
             //heightTxt.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
         userTxt.topAnchor.constraint(equalTo: view.topAnchor, constant: 350).isActive = true
@@ -162,37 +162,47 @@ class Username: UIViewController {
         continueBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -111).isActive = true
         /*loginBtn.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -28).isActive = true*/
         
-        
         continueBtn.addTarget(self, action: #selector(gotoHome), for: .touchUpInside)
+
     }
     
     @objc func gotoHome(){
-        let currentDate = Date()
+        if let text = userTxt.text, text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            // The text field is empty
+            let alert = UIAlertController(title: "Error",
+                                                  message: "Please eneter an username to proceed.",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    present(alert, animated: true, completion: nil)
+        } else {
+            // The text field has a non-empty value
+            let currentDate = Date()
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .medium
 
-        let formattedDate = dateFormatter.string(from: currentDate)
-        print("Current date: \(formattedDate)")
-        
-        let db = Firestore.firestore()
-        let currentUser = Auth.auth().currentUser
-        let email = currentUser?.email
-        let collectionRef = db.collection("user_tbl")
-        let docRef = collectionRef.document(email!)
-        docRef.updateData(["username": userTxt.text , "joined_date": formattedDate as Any]) { error in
-            if let error = error {
-                // Handle the error
-                print("Error updating document: \(error)")
-            } else {
-                // Field added successfully
-                print("Field successfully added")
+            let formattedDate = dateFormatter.string(from: currentDate)
+            print("Current date: \(formattedDate)")
+            
+            let db = Firestore.firestore()
+            let currentUser = Auth.auth().currentUser
+            let email = currentUser?.email
+            let collectionRef = db.collection("user_tbl")
+            let docRef = collectionRef.document(email!)
+            docRef.updateData(["username": userTxt.text , "joined_date": formattedDate as Any]) { error in
+                if let error = error {
+                    // Handle the error
+                    print("Error updating document: \(error)")
+                } else {
+                    // Field added successfully
+                    print("Field successfully added")
+                }
             }
+            
+            let home = Home()
+            home.title = "Home"
+            navigationController?.pushViewController(home, animated: true)
+            
         }
-        
-        let home = Home()
-        home.title = "Home"
-        navigationController?.pushViewController(home, animated: true)
     }
-
 }

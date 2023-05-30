@@ -342,53 +342,63 @@ class Goal: UIViewController {
         let email = currentUser?.email
         let collectionRef = db.collection("user_tbl")
         let docRef = collectionRef.document(email!)
-        if(val1 != "nil"){
-            print(val1)
-            docRef.updateData(["goal": "Keep it fit"]) { error in
-                if let error = error {
-                    // Handle the error
-                    print("Error updating document: \(error)")
-                } else {
-                    // Field added successfully
-                    print("Field successfully added")
+        
+        if((val1 == "nil") && (val2 == "nil") && (val3 == "nil")){
+            let alert = UIAlertController(title: "Error",
+                                                  message: "Please select goal to proceed.",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    present(alert, animated: true, completion: nil)
+        }else{
+            if(val1 != "nil"){
+                print(val1)
+                docRef.updateData(["goal": "Keep it fit"]) { error in
+                    if let error = error {
+                        // Handle the error
+                        print("Error updating document: \(error)")
+                    } else {
+                        // Field added successfully
+                        print("Field successfully added")
+                    }
                 }
             }
-        }
-        else if(val2 != "nil"){
-            docRef.updateData(["goal": "Loose weight"]) { error in
-                if let error = error {
-                    // Handle the error
-                    print("Error updating document: \(error)")
-                } else {
-                    // Field added successfully
-                    print("Field successfully added")
+            else if(val2 != "nil"){
+                docRef.updateData(["goal": "Loose weight"]) { error in
+                    if let error = error {
+                        // Handle the error
+                        print("Error updating document: \(error)")
+                    } else {
+                        // Field added successfully
+                        print("Field successfully added")
+                    }
                 }
             }
-        }
-        else if(val3 != "nil"){
-            docRef.updateData(["goal": "Get stronger"]) { error in
-                if let error = error {
-                    // Handle the error
-                    print("Error updating document: \(error)")
-                } else {
-                    // Field added successfully
-                    print("Field successfully added")
+            else if(val3 != "nil"){
+                docRef.updateData(["goal": "Get stronger"]) { error in
+                    if let error = error {
+                        // Handle the error
+                        print("Error updating document: \(error)")
+                    } else {
+                        // Field added successfully
+                        print("Field successfully added")
+                    }
                 }
             }
-        }
-        else if(val4 != "nil"){
-            docRef.updateData(["goal": "Gain muscle mass"]) { error in
-                if let error = error {
-                    // Handle the error
-                    print("Error updating document: \(error)")
-                } else {
-                    // Field added successfully
-                    print("Field successfully added")
+            else if(val4 != "nil"){
+                docRef.updateData(["goal": "Gain muscle mass"]) { error in
+                    if let error = error {
+                        // Handle the error
+                        print("Error updating document: \(error)")
+                    } else {
+                        // Field added successfully
+                        print("Field successfully added")
+                    }
                 }
             }
+            let height = Height()
+            navigationController?.pushViewController(height, animated: true)
         }
-        let height = Height()
-        navigationController?.pushViewController(height, animated: true)
+
     }
     
     @IBAction func radioButtonTapped(_ sender: UIButton) {

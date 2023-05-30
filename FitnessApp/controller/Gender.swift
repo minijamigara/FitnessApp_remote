@@ -285,54 +285,63 @@ class Gender: UIViewController {
         let db = Firestore.firestore()
         let currentUser = Auth.auth().currentUser
         let email = currentUser?.email
-        if(val1 != "nil"){
-            print(val1)
-            let docRef = db.collection("user_tbl").document(email!)
-                let data: [String: Any] = [
-                    "gender": "male"     // Add more fields as needed
-                ]
-                docRef.setData(data) { error in
-                    if let error = error {
-                        // Handle the error
-                        print("Error writing document: \(error)")
-                    } else {
-                        // Data written successfully
-                        print("Document successfully written")
-                    }
-                }
-        }
-        else if(val2 != "nil"){
+        
+        if((val1 == "nil") && (val2 == "nil") && (val3 == "nil")){
+            let alert = UIAlertController(title: "Error",
+                                                  message: "Please select gender to proceed.",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    present(alert, animated: true, completion: nil)
+        }else{
+            if(val1 != "nil"){
+                print(val1)
                 let docRef = db.collection("user_tbl").document(email!)
-                let data: [String: Any] = [
-                    "gender": "female"     // Add more fields as needed
-                ]
-                docRef.setData(data) { error in
-                    if let error = error {
-                        // Handle the error\
-                        print("Error writing document: \(error)")
-                    } else {
-                        // Data written successfully
-                        print("Document successfully written")
+                    let data: [String: Any] = [
+                        "gender": "male"     // Add more fields as needed
+                    ]
+                    docRef.setData(data) { error in
+                        if let error = error {
+                            // Handle the error
+                            print("Error writing document: \(error)")
+                        } else {
+                            // Data written successfully
+                            print("Document successfully written")
+                        }
                     }
-                }
-        }
-        else if(val3 != "nil"){
-                let docRef = db.collection("user_tbl").document(email!)
-                let data: [String: Any] = [
-                    "gender": "other"     // Add more fields as needed
-                ]
-                docRef.setData(data) { error in
-                    if let error = error {
-                        // Handle the error
-                        print("Error writing document: \(error)")
-                    } else {
-                        // Data written successfully
-                        print("Document successfully written")
+            }
+            else if(val2 != "nil"){
+                    let docRef = db.collection("user_tbl").document(email!)
+                    let data: [String: Any] = [
+                        "gender": "female"     // Add more fields as needed
+                    ]
+                    docRef.setData(data) { error in
+                        if let error = error {
+                            // Handle the error\
+                            print("Error writing document: \(error)")
+                        } else {
+                            // Data written successfully
+                            print("Document successfully written")
+                        }
                     }
-                }
+            }
+            else if(val3 != "nil"){
+                    let docRef = db.collection("user_tbl").document(email!)
+                    let data: [String: Any] = [
+                        "gender": "other"     // Add more fields as needed
+                    ]
+                    docRef.setData(data) { error in
+                        if let error = error {
+                            // Handle the error
+                            print("Error writing document: \(error)")
+                        } else {
+                            // Data written successfully
+                            print("Document successfully written")
+                        }
+                    }
+            }
+            let goal = Goal()
+            navigationController?.pushViewController(goal, animated: true)
         }
-        let goal = Goal()
-        navigationController?.pushViewController(goal, animated: true)
     }
     
     @IBAction func radioButtonTapped(_ sender: UIButton) {

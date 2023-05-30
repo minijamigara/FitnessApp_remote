@@ -86,15 +86,16 @@ class NotifyVC: UIViewController
                         view.addSubview(cardView)
                         
                         
-                        let imageName = "notification.png"
+                        let imageName = "bell.png"
                         let image = UIImage(named: imageName)
                         let imageView = UIImageView(image: image!)
-                        imageView.frame = CGRect(x: 10.0, y: 10.0, width: 30.0, height: 30.0)
+                        imageView.frame = CGRect(x: 15.0, y: 14.0, width: 22.0, height: 25.0)
                         cardView.addSubview(imageView)
                         
                         var label1 = UILabel()
                         label1 = UILabel(frame: CGRect(x: 120.0, y: 10.0, width: cardView.frame.width - 70.0, height: 30.0))
                         label1.text = reminderTextField.text
+                        label1.textColor = .darkGray
                         label1.font = UIFont.systemFont(ofSize: 18.0, weight: .semibold)
                         cardView.addSubview(label1)
                         label1.text = title
@@ -157,7 +158,7 @@ class NotifyVC: UIViewController
     
     private lazy var addButton: UIButton = {
         let button = UIButton(type: .system)
-        button.configuration?.baseForegroundColor = .black
+        button.configuration = .gray()
         button.configuration?.cornerStyle = .medium
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.orange.cgColor
@@ -260,10 +261,10 @@ class NotifyVC: UIViewController
                                 view.addSubview(cardView)
                                 
                                 
-                                let imageName = "notification.png"
+                                let imageName = "bell.png"
                                 let image = UIImage(named: imageName)
                                 let imageView = UIImageView(image: image!)
-                                imageView.frame = CGRect(x: 10.0, y: 10.0, width: 40.0, height: 40.0)
+                                imageView.frame = CGRect(x: 15.0, y: 14.0, width: 22.0, height: 25.0)
                                 cardView.addSubview(imageView)
                                 
                                 var label1 = UILabel()
