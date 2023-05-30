@@ -154,10 +154,12 @@ class PrevWeight: UIViewController {
          if toggleSwitch.isOn {
              // Handle toggle switch ON state
              print("Toggle switch is ON")
+             lbsLbl.text = "Kg"
              return "killos"
          } else {
              // Handle toggle switch OFF state
              print("Toggle switch is OFF")
+             lbsLbl.text = "Lbs"
              return "pounds"
          }
      }

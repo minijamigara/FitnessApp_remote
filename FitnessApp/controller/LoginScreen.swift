@@ -23,7 +23,7 @@ class LoginScreen: UIViewController {
         
         navigationItem.hidesBackButton = true
         
-        view.backgroundColor = .systemPurple
+        view.backgroundColor = .orange
         
         rectrangleView.frame = CGRect(x:0, y: 350, width: 393 , height: 600)
         rectrangleView.backgroundColor = UIColor.black
@@ -135,9 +135,6 @@ class LoginScreen: UIViewController {
             strongSelf.usernameTxt.isHidden = true
             strongSelf.passwordTxt.isHidden = true
         })
-        
-        //let home  = Home()
-        //self.navigationController?.pushViewController(home, animated: true)
     }
     
     func showLoggedAccount(email : String, password : String){

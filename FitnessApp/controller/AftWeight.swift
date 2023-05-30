@@ -162,10 +162,12 @@ class AftWeight: UIViewController {
          if toggleSwitch.isOn {
              // Handle toggle switch ON state
              //print("Toggle switch is ON")
+             lbsLbl.text = "Kg"
              return "killos"
          } else {
              // Handle toggle switch OFF state
              //print("Toggle switch is OFF")
+             lbsLbl.text = "Lbs"
              return "pounds"
          }
      }
@@ -376,6 +378,7 @@ class AftWeight: UIViewController {
                 home.title = "Username"
                 self.navigationController?.pushViewController(home, animated: true)
             }
+            
         }
         
     }

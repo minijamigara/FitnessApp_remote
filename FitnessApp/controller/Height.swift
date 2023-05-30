@@ -157,12 +157,16 @@ class Height: UIViewController {
          if toggleSwitch.isOn {
              // Handle toggle switch ON state
              print("Toggle switch is ON")
+             cmLbl.text = "Cm"
              return "cm"
+             
              
          } else {
              // Handle toggle switch OFF state
              print("Toggle switch is OFF")
+             cmLbl.text = "feet"
              return "feet"
+             
          }
      }
     
@@ -196,7 +200,7 @@ class Height: UIViewController {
     
     
     func configureCmLbl(){
-        cmLbl.text = "Cm"
+        cmLbl.text = "feet"
         cmLbl.textAlignment = .center
         cmLbl.textColor = .gray
         cmLbl.translatesAutoresizingMaskIntoConstraints = false
