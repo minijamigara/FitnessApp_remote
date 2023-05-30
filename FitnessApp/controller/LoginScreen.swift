@@ -21,6 +21,8 @@ class LoginScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.hidesBackButton = true
+        
         view.backgroundColor = .white
         
         rectrangleView.frame = CGRect(x:0, y: 350, width: 393 , height: 600)

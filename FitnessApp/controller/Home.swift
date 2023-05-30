@@ -16,6 +16,8 @@ class Home: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.hidesBackButton = true
 
         self.tabBar.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
         
@@ -176,17 +178,17 @@ class NotifyVC: UIViewController
         NSLayoutConstraint.activate([
             bodyTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             bodyTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -220),
-            bodyTextField.widthAnchor.constraint(equalToConstant: 350),
-            bodyTextField.heightAnchor.constraint(equalToConstant: 40),
+            bodyTextField.widthAnchor.constraint(equalToConstant: 320),
+            bodyTextField.heightAnchor.constraint(equalToConstant: 50),
             
             reminderTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             reminderTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -280),
-            reminderTextField.widthAnchor.constraint(equalToConstant: 350),
-            reminderTextField.heightAnchor.constraint(equalToConstant: 40),
+            reminderTextField.widthAnchor.constraint(equalToConstant: 320),
+            reminderTextField.heightAnchor.constraint(equalToConstant: 50),
             
             addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            addButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -160),    addButton.widthAnchor.constraint(equalToConstant: 350),
-            addButton.heightAnchor.constraint(equalToConstant: 40),
+            addButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -160),    addButton.widthAnchor.constraint(equalToConstant: 320),
+            addButton.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
     
@@ -498,7 +500,7 @@ class AccountVC: UIViewController {
     //tot hour container
     func setupTotHrContainer(){
         rectrangleTotHr.frame = CGRect(x:30, y: 420, width: 150 , height: 70)
-        rectrangleTotHr.backgroundColor = UIColor.orange
+        rectrangleTotHr.backgroundColor = UIColor.purple
         rectrangleTotHr.layer.opacity = 0.4
         rectrangleTotHr.layer.cornerRadius = 20
         self.view.addSubview(rectrangleTotHr)
@@ -536,7 +538,7 @@ class AccountVC: UIViewController {
     //BMI container
     func setupBMIContainer(){
         rectrangleBMI.frame = CGRect(x:210, y: 420, width: 150 , height: 70)
-        rectrangleBMI.backgroundColor = UIColor.orange
+        rectrangleBMI.backgroundColor = UIColor.purple
         rectrangleBMI.layer.opacity = 0.4
         rectrangleBMI.layer.cornerRadius = 20
         self.view.addSubview(rectrangleBMI)

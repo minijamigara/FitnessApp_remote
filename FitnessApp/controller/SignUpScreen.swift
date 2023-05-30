@@ -21,6 +21,7 @@ class SignUpScreen: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.hidesBackButton = true
         /*let imageName = "welcomeImg.jpg"
         let image = UIImage(named: imageName)
         let imageView = UIImageView(image: image!)*/
