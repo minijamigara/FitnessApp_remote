@@ -397,11 +397,11 @@ class ExeDetails: UIViewController {
         
         NSLayoutConstraint.activate([
             
-            exeDes.widthAnchor.constraint(equalToConstant: 350),
-            exeDes.heightAnchor.constraint(equalToConstant: 100),
-            exeDes.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
-            exeDes.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 10),
-            exeDes.centerXAnchor.constraint(equalTo: view.centerXAnchor,constant: 10),
+            exeDes.widthAnchor.constraint(equalToConstant: 370),
+            exeDes.heightAnchor.constraint(equalToConstant: 130),
+            //exeDes.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5),
+            //exeDes.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 5),
+            //exeDes.centerXAnchor.constraint(equalTo: view.centerXAnchor,constant: 10),
         ])
         exeDes.topAnchor.constraint(equalTo: view.topAnchor, constant: 280).isActive = true
     }
