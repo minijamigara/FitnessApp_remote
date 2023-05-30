@@ -397,7 +397,6 @@ class AccountVC: UIViewController {
                 print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
             }
         }
-    /////////////////
     }
     
     override func viewWillAppear(_ animated: Bool) {

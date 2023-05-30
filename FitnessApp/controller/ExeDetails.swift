@@ -105,10 +105,22 @@ class ExeDetails: UIViewController {
         }else if(doneExercise == "Bar Preacher Curl"){
             getCaloies(val: 2)
             getHours(val1: warmUp.exe_hours)
-        }else if(doneExercise == "Bar Preacher Curl"){
+        }else if(doneExercise == "Hammer Curl"){
             getCaloies(val: 1)
             getHours(val1: warmUp.exe_hours)
-        }else if(doneExercise == "Bar Preacher Curl"){
+        }else if(doneExercise == "Dumbbell Curl"){
+            getCaloies(val: 3)
+            getHours(val1: warmUp.exe_hours)
+        }else if(doneExercise == "Cardio"){
+            getCaloies(val: 4)
+            getHours(val1: warmUp.exe_hours)
+        }else if(doneExercise == "Knee tucks"){
+            getCaloies(val: 2)
+            getHours(val1: warmUp.exe_hours)
+        }else if(doneExercise == "crow stand"){
+            getCaloies(val: 1)
+            getHours(val1: warmUp.exe_hours)
+        }else if(doneExercise == "Inchworm"){
             getCaloies(val: 3)
             getHours(val1: warmUp.exe_hours)
         }
