@@ -275,30 +275,52 @@ class Height: UIViewController {
             if(val == "cm"){
                 print(val)
                 let heightCm = heightTxt.text
-                docRef.updateData(["height_measurement_type": "cm" , "height": heightCm as Any]) { error in
-                    if let error = error {
-                        // Handle the error
-                        print("Error updating document: \(error)")
-                    } else {
-                        // Field added successfully
-                        print("Field successfully added")
+                
+                let validateHeight :Int? = Int(heightTxt.text!)
+                if (validateHeight! > 0 && validateHeight! < 200){
+                    docRef.updateData(["height_measurement_type": "cm" , "height": heightCm as Any]) { error in
+                        if let error = error {
+                            // Handle the error
+                            print("Error updating document: \(error)")
+                        } else {
+                            // Field added successfully
+                            print("Field successfully added")
+                        }
                     }
                 }
+                else{
+                    let alert = UIAlertController(title: "Error",
+                                                          message: "Please eneter a valid height to proceed.",
+                                                          preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            present(alert, animated: true, completion: nil)
+                }
+
             }
             else if(val == "feet"){
                 print(val)
                 let heightFeet = heightTxt.text
                 let floatHeight = Float(heightFeet!)
-                let heightInCentimeters = floatHeight! * 30.48
-                docRef.updateData(["height_measurement_type": "feet" , "height": String(heightInCentimeters) as Any]) { error in
-                    if let error = error {
-                        // Handle the error
-                        print("Error updating document: \(error)")
-                    } else {
-                        // Field added successfully
-                        print("Field successfully added")
+                if(floatHeight! > 0 && floatHeight! < 7){
+                    let heightInCentimeters = floatHeight! * 30.48
+                    docRef.updateData(["height_measurement_type": "feet" , "height": String(heightInCentimeters) as Any]) { error in
+                        if let error = error {
+                            // Handle the error
+                            print("Error updating document: \(error)")
+                        } else {
+                            // Field added successfully
+                            print("Field successfully added")
+                        }
                     }
+                }else{
+                    let alert = UIAlertController(title: "Error",
+                                                          message: "Please eneter a valid height to proceed.",
+                                                          preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            present(alert, animated: true, completion: nil)
                 }
+                }
+
             }
             
             let prev_weight = PrevWeight()
@@ -308,5 +330,5 @@ class Height: UIViewController {
         
     }
 
-}
+
 

@@ -343,12 +343,17 @@ class Goal: UIViewController {
         let collectionRef = db.collection("user_tbl")
         let docRef = collectionRef.document(email!)
         
-        if((val1 == "nil") && (val2 == "nil") && (val3 == "nil")){
+        if((val1 == "nil") && (val2 == "nil") && (val3 == "nil") && (val4 == "nil")){
             let alert = UIAlertController(title: "Error",
                                                   message: "Please select goal to proceed.",
                                                   preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     present(alert, animated: true, completion: nil)
+            radioButton.isSelected = false
+            radioButton1.isSelected = false
+            radioButton2.isSelected = false
+            radioButton3.isSelected = false
+            
         }else{
             if(val1 != "nil"){
                 print(val1)

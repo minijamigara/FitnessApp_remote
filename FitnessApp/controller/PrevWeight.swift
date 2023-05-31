@@ -270,29 +270,50 @@ class PrevWeight: UIViewController {
             if(val == "killos"){
                 //print(val)
                 let weightKg = weightTxt.text
-                docRef.updateData(["weight_measurement_type": "kg" , "weight": weightKg as Any]) { error in
-                    if let error = error {
-                        // Handle the error
-                        print("Error updating document: \(error)")
-                    } else {
-                        // Field added successfully
-                        print("Field successfully added")
+                
+                let validateWeight :Int? = Int(weightTxt.text!)
+                if (validateWeight! > 0 && validateWeight! < 150){
+                    docRef.updateData(["weight_measurement_type": "kg" , "weight": weightKg as Any]) { error in
+                        if let error = error {
+                            // Handle the error
+                            print("Error updating document: \(error)")
+                        } else {
+                            // Field added successfully
+                            print("Field successfully added")
+                        }
                     }
+                }else{
+                    let alert = UIAlertController(title: "Error",
+                                                          message: "Please eneter a valid weight to proceed.",
+                                                          preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            present(alert, animated: true, completion: nil)
                 }
+                
+
             }
             else if(val == "pounds"){
                 //print(val)
                 let weightlbs = weightTxt.text
-                let floatWeight = Float(weightlbs!)!
-                let weightInKilograms = floatWeight * 0.45359237
-                docRef.updateData(["weight_measurement_type": "lbs" , "weight": weightInKilograms as Any]) { error in
-                    if let error = error {
-                        // Handle the error
-                        print("Error updating document: \(error)")
-                    } else {
-                        // Field added successfully
-                        print("Field successfully added")
+                let validateWeight :Int? = Int(weightTxt.text!)
+                if(validateWeight! > 0 && validateWeight! < 330){
+                    let floatWeight = Float(weightlbs!)!
+                    let weightInKilograms = floatWeight * 0.45359237
+                    docRef.updateData(["weight_measurement_type": "lbs" , "weight": weightInKilograms as Any]) { error in
+                        if let error = error {
+                            // Handle the error
+                            print("Error updating document: \(error)")
+                        } else {
+                            // Field added successfully
+                            print("Field successfully added")
+                        }
                     }
+                }else{
+                    let alert = UIAlertController(title: "Error",
+                                                          message: "Please eneter a valid weight to proceed.",
+                                                          preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            present(alert, animated: true, completion: nil)
                 }
             }
             

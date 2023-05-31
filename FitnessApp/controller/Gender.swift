@@ -292,6 +292,9 @@ class Gender: UIViewController {
                                                   preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     present(alert, animated: true, completion: nil)
+            radioButton.isSelected = false
+            radioButton1.isSelected = false
+            radioButton2.isSelected = false
         }else{
             if(val1 != "nil"){
                 print(val1)
