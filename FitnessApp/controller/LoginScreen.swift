@@ -111,7 +111,11 @@ class LoginScreen: UIViewController {
         
         guard let email = usernameTxt.text, !email.isEmpty,
               let password = passwordTxt.text, !password.isEmpty else{
-            print("Missing field data")
+            let alert = UIAlertController(title: "Error",
+                                                  message: "Please eneter valid credentials.",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    present(alert, animated: true, completion: nil)
             return
         }
         

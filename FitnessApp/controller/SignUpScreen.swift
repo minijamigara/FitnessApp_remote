@@ -108,6 +108,11 @@ class SignUpScreen: UIViewController {
         guard let email = emailTxt.text, !email.isEmpty,
               let password = passwordTxt.text, !password.isEmpty else{
             print("Missing field data")
+            let alert = UIAlertController(title: "Error",
+                                                  message: "Please eneter valid credentials.",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    present(alert, animated: true, completion: nil)
             return
         }
         
@@ -125,9 +130,14 @@ class SignUpScreen: UIViewController {
                 strongSelf.showCreateAccount(email : email, password : password)
                 return
             }
-            print("You have signed in")
-            strongSelf.emailTxt.isHidden = true
-            strongSelf.passwordTxt.isHidden = true
+            print("User exists")
+            //strongSelf.emailTxt.isHidden = true
+            //strongSelf.passwordTxt.isHidden = true
+            let alert = UIAlertController(title: "Error",
+                                                  message: "This user already exists.",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self!.present(alert, animated: true, completion: nil)
         })
 
     }
